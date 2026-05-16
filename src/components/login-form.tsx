@@ -67,7 +67,7 @@ export function LoginForm({
             <input
               id="emailId"
               type="email"
-              placeholder="yourname@vishwaniketan.edu.in"
+              placeholder="yourname@gmail.com"
               value={formData.emailId}
               onChange={handleChange}
               required
