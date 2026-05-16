@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getAuthUser, unauthorized, forbidden } from "@/lib/apiAuth";
+import { sendMail } from "@/lib/mail";
+import { accountRejectedEmail } from "@/lib/emailTemplates";
 
 export async function POST(
   request: NextRequest,
@@ -17,10 +19,15 @@ export async function POST(
   }
 
   try {
-    await prisma.user.update({
+    const { reason } = (await request.json().catch(() => ({}))) as { reason?: string };
+
+    const updatedUser = await prisma.user.update({
       where: { id: userId },
       data: { isActive: false },
     });
+
+    const { subject, html } = accountRejectedEmail(updatedUser.fullName, reason);
+    await sendMail({ to: updatedUser.emailId, subject, html });
 
     return NextResponse.json({ message: "Registration rejected" });
   } catch (error) {

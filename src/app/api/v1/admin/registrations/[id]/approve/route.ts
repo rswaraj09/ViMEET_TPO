@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getAuthUser, unauthorized, forbidden } from "@/lib/apiAuth";
+import { sendMail } from "@/lib/mail";
+import { accountApprovedEmail } from "@/lib/emailTemplates";
 
 export async function POST(
   request: NextRequest,
@@ -17,10 +19,13 @@ export async function POST(
   }
 
   try {
-    await prisma.user.update({
+    const updatedUser = await prisma.user.update({
       where: { id: userId },
-      data: { isVerified: true },
+      data: { isVerified: true, isActive: true },
     });
+
+    const { subject, html } = accountApprovedEmail(updatedUser.fullName);
+    await sendMail({ to: updatedUser.emailId, subject, html });
 
     return NextResponse.json({ message: "Registration approved" });
   } catch (error) {

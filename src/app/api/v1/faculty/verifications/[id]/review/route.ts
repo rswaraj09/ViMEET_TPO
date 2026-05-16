@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getAuthUser, unauthorized, forbidden } from "@/lib/apiAuth";
+import { sendMail } from "@/lib/mail";
+import { verificationApprovedEmail, verificationRejectedEmail } from "@/lib/emailTemplates";
 
 export async function POST(
   request: NextRequest,
@@ -11,7 +13,7 @@ export async function POST(
   if (user.role !== "FACULTY") return forbidden();
 
   const { id } = await params;
-  const body = await request.json() as { status: string; remarks?: string };
+  const body = (await request.json()) as { status: string; remarks?: string };
   const { status, remarks } = body;
 
   if (!["APPROVED", "REJECTED"].includes(status)) {
@@ -21,7 +23,11 @@ export async function POST(
   try {
     const vr = await prisma.verificationRequest.findUnique({
       where: { id },
-      include: { student: { select: { department: true } } },
+      include: {
+        student: {
+          select: { id: true, fullName: true, emailId: true, department: true },
+        },
+      },
     });
 
     if (!vr) return NextResponse.json({ message: "Not found" }, { status: 404 });
@@ -57,6 +63,19 @@ export async function POST(
         reviewedAt: new Date(),
       },
     });
+
+    // Send email notification
+    if (status === "APPROVED") {
+      const { subject, html } = verificationApprovedEmail(vr.student.fullName, vr.entityType);
+      await sendMail({ to: vr.student.emailId, subject, html });
+    } else {
+      const { subject, html } = verificationRejectedEmail(
+        vr.student.fullName,
+        vr.entityType,
+        remarks
+      );
+      await sendMail({ to: vr.student.emailId, subject, html });
+    }
 
     return NextResponse.json({ message: "Review submitted" });
   } catch (error) {
