@@ -30,7 +30,7 @@ import { extractErrorMessage } from "@/lib/api/base";
 import { AdminSidebar, type AdminTab } from "@/components/shared/AdminSidebar";
 import { exportStudentProfileToPdf } from "@/lib/studentProfileExport";
 import { StudentNotesPanel } from "@/components/shared/StudentNotesPanel";
-import { resumeViewUrl } from "@/lib/utils";
+import { resumeViewUrl, marksheetImageUrl } from "@/lib/utils";
 
 export function StudentDetail() {
   const { id } = useParams<{ id: string }>();
@@ -781,7 +781,7 @@ function Metric({
       </p>
       {pdfUrl && (
         <a
-          href={pdfUrl}
+          href={marksheetImageUrl(pdfUrl)}
           target="_blank"
           rel="noreferrer"
           className="mt-1.5 inline-flex items-center gap-1 text-[10px] font-medium text-neutral-600 underline hover:text-neutral-900"

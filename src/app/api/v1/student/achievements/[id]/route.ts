@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+﻿import { NextRequest, NextResponse } from "next/server";
 import { getAuthUser, unauthorized, forbidden } from "@/lib/apiAuth";
 import prisma from "@/lib/prisma";
 
@@ -10,26 +10,29 @@ export async function PATCH(
   if (!user) return unauthorized();
   if (!["STUDENT", "ALUMNI"].includes(user.role)) return forbidden();
 
+  const { id } = await params;
+
   try {
-    const { id } = await params;
-    const body = await request.json();
-
-    const data: Record<string, unknown> = {};
-    if ("title" in body) data.title = body.title;
-    if ("description" in body) data.description = body.description;
-    if ("category" in body) data.category = body.category;
-    if ("certificateUrl" in body) data.certificateUrl = body.certificateUrl;
-    if ("achievementDate" in body)
-      data.achievementDate = body.achievementDate ? new Date(body.achievementDate) : null;
-
-    const achievement = await prisma.achievement.update({
+    const existing = await prisma.achievement.findFirst({
       where: { id, userId: user.id },
-      data,
     });
+    if (!existing) return NextResponse.json({ message: "Not found" }, { status: 404 });
 
+    const body = await request.json() as Record<string, unknown>;
+    const data: Record<string, unknown> = {};
+
+    if (body.title !== undefined) data.title = body.title;
+    if (body.description !== undefined) data.description = body.description;
+    if (body.category !== undefined) data.category = body.category;
+    if (body.certificateUrl !== undefined) data.certificateUrl = body.certificateUrl;
+    if ("achievementDate" in body) {
+      data.achievementDate = body.achievementDate ? new Date(body.achievementDate as string) : null;
+    }
+
+    const achievement = await prisma.achievement.update({ where: { id }, data: data as never });
     return NextResponse.json({ achievement });
   } catch (error) {
-    console.error("[student/achievements/:id PATCH]", error);
+    console.error("[student/achievements/[id] PATCH]", error);
     return NextResponse.json({ message: "Internal server error" }, { status: 500 });
   }
 }
@@ -42,16 +45,18 @@ export async function DELETE(
   if (!user) return unauthorized();
   if (!["STUDENT", "ALUMNI"].includes(user.role)) return forbidden();
 
-  try {
-    const { id } = await params;
+  const { id } = await params;
 
-    await prisma.achievement.delete({
+  try {
+    const existing = await prisma.achievement.findFirst({
       where: { id, userId: user.id },
     });
+    if (!existing) return NextResponse.json({ message: "Not found" }, { status: 404 });
 
-    return NextResponse.json({}, { status: 204 });
+    await prisma.achievement.delete({ where: { id } });
+    return NextResponse.json({ message: "Deleted" });
   } catch (error) {
-    console.error("[student/achievements/:id DELETE]", error);
+    console.error("[student/achievements/[id] DELETE]", error);
     return NextResponse.json({ message: "Internal server error" }, { status: 500 });
   }
 }

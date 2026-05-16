@@ -41,10 +41,10 @@ export interface UpdateEventPayload extends Partial<CreateEventPayload> {
 export const adminListEvents = async (
   scope?: "upcoming" | "past"
 ): Promise<EventItem[]> => {
-  const { data } = await api.get<{ items: EventItem[] }>("/admin/events", {
+  const { data } = await api.get<{ events?: EventItem[]; items?: EventItem[] }>("/admin/events", {
     params: scope ? { scope } : {},
   });
-  return data.items;
+  return data.events ?? data.items ?? [];
 };
 
 export const adminCreateEvent = async (
@@ -81,6 +81,6 @@ export const adminDeleteEvent = async (id: string): Promise<void> => {
 
 // Public
 export const publicListUpcomingEvents = async (): Promise<EventItem[]> => {
-  const { data } = await api.get<{ items: EventItem[] }>("/public/events");
-  return data.items;
+  const { data } = await api.get<{ events?: EventItem[]; items?: EventItem[] }>("/public/events");
+  return data.events ?? data.items ?? [];
 };

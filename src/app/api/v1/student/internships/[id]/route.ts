@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+﻿import { NextRequest, NextResponse } from "next/server";
 import { getAuthUser, unauthorized, forbidden } from "@/lib/apiAuth";
 import prisma from "@/lib/prisma";
 
@@ -10,30 +10,29 @@ export async function PATCH(
   if (!user) return unauthorized();
   if (!["STUDENT", "ALUMNI"].includes(user.role)) return forbidden();
 
+  const { id } = await params;
+
   try {
-    const { id } = await params;
-    const body = await request.json();
-
-    const data: Record<string, unknown> = {};
-    if ("companyName" in body) data.companyName = body.companyName;
-    if ("role" in body) data.role = body.role;
-    if ("roleDescription" in body) data.roleDescription = body.roleDescription;
-    if ("duration" in body) data.duration = body.duration;
-    if ("startDate" in body) data.startDate = new Date(body.startDate);
-    if ("endDate" in body) data.endDate = body.endDate ? new Date(body.endDate) : null;
-    if ("certificateUrl" in body) data.certificateUrl = body.certificateUrl;
-    if ("hrName" in body) data.hrName = body.hrName;
-    if ("hrEmail" in body) data.hrEmail = body.hrEmail;
-    if ("hrPhone" in body) data.hrPhone = body.hrPhone;
-
-    const internship = await prisma.internship.update({
+    const existing = await prisma.internship.findFirst({
       where: { id, userId: user.id },
-      data,
     });
+    if (!existing) return NextResponse.json({ message: "Not found" }, { status: 404 });
 
+    const body = await request.json() as Record<string, unknown>;
+    const data: Record<string, unknown> = {};
+
+    if (body.companyName !== undefined) data.companyName = body.companyName;
+    if (body.role !== undefined) data.role = body.role;
+    if (body.roleDescription !== undefined) data.roleDescription = body.roleDescription;
+    if (body.duration !== undefined) data.duration = body.duration;
+    if (body.startDate !== undefined) data.startDate = new Date(body.startDate as string);
+    if ("endDate" in body) data.endDate = body.endDate ? new Date(body.endDate as string) : null;
+    if (body.certificateUrl !== undefined) data.certificateUrl = body.certificateUrl;
+
+    const internship = await prisma.internship.update({ where: { id }, data: data as never });
     return NextResponse.json({ internship });
   } catch (error) {
-    console.error("[student/internships/:id PATCH]", error);
+    console.error("[student/internships/[id] PATCH]", error);
     return NextResponse.json({ message: "Internal server error" }, { status: 500 });
   }
 }
@@ -46,16 +45,18 @@ export async function DELETE(
   if (!user) return unauthorized();
   if (!["STUDENT", "ALUMNI"].includes(user.role)) return forbidden();
 
-  try {
-    const { id } = await params;
+  const { id } = await params;
 
-    await prisma.internship.delete({
+  try {
+    const existing = await prisma.internship.findFirst({
       where: { id, userId: user.id },
     });
+    if (!existing) return NextResponse.json({ message: "Not found" }, { status: 404 });
 
-    return NextResponse.json({}, { status: 204 });
+    await prisma.internship.delete({ where: { id } });
+    return NextResponse.json({ message: "Deleted" });
   } catch (error) {
-    console.error("[student/internships/:id DELETE]", error);
+    console.error("[student/internships/[id] DELETE]", error);
     return NextResponse.json({ message: "Internal server error" }, { status: 500 });
   }
 }

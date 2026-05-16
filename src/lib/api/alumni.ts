@@ -318,3 +318,82 @@ export const getAlumniAcademicHistory = async (): Promise<AcademicHistoryRespons
   const { data } = await api.get<AcademicHistoryResponse>("/alumni/me/academic-history");
   return data;
 };
+
+// ==================== ACADEMIC EDITS ====================
+
+export const updateAlumniMarks = async (
+  payload: Record<string, number | null>
+): Promise<AlumniMarks> => {
+  const { data } = await api.patch<{ marks: AlumniMarks }>("/student/marks", payload);
+  return data.marks;
+};
+
+export interface InternshipPayload {
+  companyName: string;
+  role: string;
+  roleDescription?: string;
+  duration?: string;
+  startDate: string;
+  endDate?: string | null;
+  certificateUrl?: string;
+}
+
+export const addAlumniInternship = async (payload: InternshipPayload): Promise<AlumniInternship> => {
+  const { data } = await api.post<{ internship: AlumniInternship }>("/student/internships", payload);
+  return data.internship;
+};
+
+export const updateAlumniInternship = async (id: string, payload: Partial<InternshipPayload>): Promise<AlumniInternship> => {
+  const { data } = await api.patch<{ internship: AlumniInternship }>(`/student/internships/${id}`, payload);
+  return data.internship;
+};
+
+export const deleteAlumniInternship = async (id: string): Promise<void> => {
+  await api.delete(`/student/internships/${id}`);
+};
+
+export interface AchievementPayload {
+  title: string;
+  description?: string;
+  category?: string;
+  certificateUrl?: string;
+  achievementDate?: string | null;
+}
+
+export const addAlumniAchievement = async (payload: AchievementPayload): Promise<AlumniAchievement> => {
+  const { data } = await api.post<{ achievement: AlumniAchievement }>("/student/achievements", payload);
+  return data.achievement;
+};
+
+export const updateAlumniAchievement = async (id: string, payload: Partial<AchievementPayload>): Promise<AlumniAchievement> => {
+  const { data } = await api.patch<{ achievement: AlumniAchievement }>(`/student/achievements/${id}`, payload);
+  return data.achievement;
+};
+
+export const deleteAlumniAchievement = async (id: string): Promise<void> => {
+  await api.delete(`/student/achievements/${id}`);
+};
+
+export interface ProjectPayload {
+  title: string;
+  description?: string;
+  techStack?: string[];
+  projectUrl?: string;
+  repoUrl?: string;
+  startDate?: string | null;
+  endDate?: string | null;
+}
+
+export const addAlumniProject = async (payload: ProjectPayload): Promise<AlumniProject> => {
+  const { data } = await api.post<{ project: AlumniProject }>("/student/projects", payload);
+  return data.project;
+};
+
+export const updateAlumniProject = async (id: string, payload: Partial<ProjectPayload>): Promise<AlumniProject> => {
+  const { data } = await api.patch<{ project: AlumniProject }>(`/student/projects/${id}`, payload);
+  return data.project;
+};
+
+export const deleteAlumniProject = async (id: string): Promise<void> => {
+  await api.delete(`/student/projects/${id}`);
+};
