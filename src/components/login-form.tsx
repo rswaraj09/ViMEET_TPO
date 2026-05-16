@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -71,6 +71,7 @@ export function LoginForm({
               value={formData.emailId}
               onChange={handleChange}
               required
+              suppressHydrationWarning
               className="w-full h-11 pl-10 pr-3 rounded-lg border border-neutral-200 bg-white text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none focus:border-neutral-900 focus:ring-2 focus:ring-neutral-900/10 transition"
             />
           </div>
@@ -100,6 +101,7 @@ export function LoginForm({
               required
               value={formData.password}
               onChange={handleChange}
+              suppressHydrationWarning
               className="w-full h-11 pl-10 pr-10 rounded-lg border border-neutral-200 bg-white text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none focus:border-neutral-900 focus:ring-2 focus:ring-neutral-900/10 transition"
             />
             <button
@@ -120,6 +122,7 @@ export function LoginForm({
         <button
           type="submit"
           disabled={loading}
+          suppressHydrationWarning
           className="w-full h-11 inline-flex items-center justify-center gap-2 rounded-lg bg-neutral-900 text-white text-sm font-medium hover:bg-neutral-800 active:bg-neutral-950 disabled:opacity-60 disabled:cursor-not-allowed transition"
         >
           {loading ? (

@@ -41,6 +41,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser(data.user);
     } catch {
       setUser(null);
+      await api.post("/auth/logout").catch(() => {});
+      if (typeof window !== "undefined" && window.location.pathname !== "/login") {
+        window.location.href = "/login";
+      }
     } finally {
       setLoading(false);
     }
