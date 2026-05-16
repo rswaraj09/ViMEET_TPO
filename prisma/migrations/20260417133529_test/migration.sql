@@ -1,0 +1,3 @@
+-- This migration is intentionally empty.
+-- BroadcastStatus, BroadcastType, and BroadcastJob were already created
+-- in migration 20260417112306_add_projects and are duplicated here.

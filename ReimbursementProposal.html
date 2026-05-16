@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TPO Portal – Infrastructure Reimbursement Proposal</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Times+New+Roman&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 12pt;
+      color: #000;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: #fff;
+      margin: 0 auto 20px auto;
+      padding: 25mm 20mm 20mm 20mm;
+      box-shadow: 0 0 8px rgba(0,0,0,0.15);
+      page-break-after: always;
+    }
+
+    /* ---- HEADER ---- */
+    .institute-header {
+      text-align: center;
+      border-bottom: 3px double #000;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+    .institute-header h1 {
+      font-size: 16pt;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .institute-header p {
+      font-size: 11pt;
+      margin-top: 3px;
+    }
+
+    /* ---- TITLE BLOCK ---- */
+    .doc-title {
+      text-align: center;
+      margin: 18px 0 14px;
+    }
+    .doc-title h2 {
+      font-size: 15pt;
+      font-weight: bold;
+      text-decoration: underline;
+      text-transform: uppercase;
+    }
+    .doc-title .subtitle {
+      font-size: 12pt;
+      margin-top: 5px;
+      font-style: italic;
+    }
+
+    /* ---- META TABLE ---- */
+    .meta-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 11pt;
+    }
+    .meta-table td {
+      padding: 5px 8px;
+      border: 1px solid #888;
+    }
+    .meta-table td:first-child {
+      font-weight: bold;
+      width: 38%;
+      background: #f0f0f0;
+    }
+
+    /* ---- SECTION HEADERS ---- */
+    h3.section-title {
+      font-size: 13pt;
+      font-weight: bold;
+      text-decoration: underline;
+      margin: 22px 0 10px;
+      text-transform: uppercase;
+    }
+    h4.sub-title {
+      font-size: 12pt;
+      font-weight: bold;
+      margin: 14px 0 6px;
+    }
+
+    /* ---- PARAGRAPHS ---- */
+    p { line-height: 1.7; margin-bottom: 8px; text-align: justify; }
+
+    /* ---- BULLET LISTS ---- */
+    ul.feature-list {
+      list-style: disc;
+      margin-left: 24px;
+      line-height: 1.8;
+    }
+    ul.feature-list li { margin-bottom: 3px; }
+
+    /* ---- COST TABLE ---- */
+    table.cost-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 16px;
+      font-size: 11pt;
+    }
+    table.cost-table th {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 7px 10px;
+      text-align: left;
+      border: 1px solid #333;
+    }
+    table.cost-table th.right,
+    table.cost-table td.right { text-align: right; }
+    table.cost-table td {
+      padding: 7px 10px;
+      border: 1px solid #aaa;
+      vertical-align: top;
+    }
+    table.cost-table tr:nth-child(even) td { background: #f7f7f7; }
+    table.cost-table tr.subtotal td {
+      font-weight: bold;
+      background: #e8e8e8;
+      border-top: 2px solid #555;
+    }
+    table.cost-table tr.grand-total td {
+      font-weight: bold;
+      background: #1a1a2e;
+      color: #fff;
+      border-top: 2px solid #000;
+      font-size: 12pt;
+    }
+    table.cost-table tr.grand-total td.right { text-align: right; }
+
+    /* ---- NOTE BOX ---- */
+    .note-box {
+      border-left: 4px solid #444;
+      background: #f9f9f9;
+      padding: 10px 14px;
+      margin: 14px 0;
+      font-size: 10.5pt;
+      font-style: italic;
+    }
+
+    /* ---- SIGNATURE ---- */
+    .signature-block {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 11pt;
+    }
+    .sig-col { text-align: center; width: 30%; }
+    .sig-line { border-top: 1px solid #000; margin-top: 40px; padding-top: 6px; }
+
+    /* ---- FOOTER ---- */
+    .footer {
+      text-align: center;
+      font-size: 9pt;
+      color: #666;
+      border-top: 1px solid #ccc;
+      margin-top: 20px;
+      padding-top: 8px;
+    }
+
+    /* ---- PAGE BREAK ---- */
+    .page-break { page-break-before: always; }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .page {
+        box-shadow: none;
+        margin: 0;
+        padding: 20mm 18mm 18mm 18mm;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===================== PAGE 1 ===================== -->
+<div class="page">
+
+  <div class="institute-header">
+    <h1>Vishwaniketan iMEET</h1>
+    <p>Institute of Management, Engineering &amp; Technology</p>
+    <p>Khalapur, Raigad, Maharashtra</p>
+  </div>
+
+  <div class="doc-title">
+    <h2>Project Infrastructure Reimbursement Proposal</h2>
+    <div class="subtitle">Training &amp; Placement Office (TPO) Portal — vimeettpo.xyz</div>
+  </div>
+
+  <table class="meta-table">
+    <tr><td>Document Type</td><td>Reimbursement Proposal for Cloud Infrastructure</td></tr>
+    <tr><td>Project Title</td><td>Vishwaniketan TPO Portal</td></tr>
+    <tr><td>Project Domain</td><td>https://vimeettpo.xyz</td></tr>
+    <tr><td>Date of Submission</td><td>May 2026</td></tr>
+    <tr><td>Claim Period</td><td>12 Months (Annual Maintenance Cycle)</td></tr>
+    <tr><td>Total Claimed Amount</td><td><strong>₹ 30,000 /- (Approx.)</strong></td></tr>
+    <tr><td>Submitted To</td><td>Training &amp; Placement Officer, Vishwaniketan iMEET</td></tr>
+  </table>
+
+  <h3 class="section-title">1. Executive Summary</h3>
+  <p>
+    This proposal is submitted to request reimbursement for the operational and maintenance expenses
+    incurred in developing and running the <strong>Vishwaniketan TPO Portal</strong> — a full-stack
+    web application built to digitise and automate the entire Training &amp; Placement process of
+    the institute. The portal is live, production-deployed, and actively used by students, faculty,
+    and placement administrators.
+  </p>
+  <p>
+    The charges listed herein cover only essential third-party infrastructure services required to
+    keep the application running at the minimum viable production standard. No development labour
+    costs are claimed. All rates reflect the lowest available commercial tiers of each platform.
+  </p>
+
+  <h3 class="section-title">2. Project Overview</h3>
+  <p>
+    The TPO Portal is a role-based, multi-user web platform that consolidates placement-related
+    workflows under a single system accessible 24 × 7 from any device. It replaces manual paperwork,
+    Excel sheets, and ad-hoc email communication with a structured, verifiable, and audit-friendly
+    digital workflow.
+  </p>
+
+  <h4 class="sub-title">Technology Stack</h4>
+  <ul class="feature-list">
+    <li><strong>Frontend:</strong> React 19, TypeScript, Vite, Tailwind CSS, Framer Motion</li>
+    <li><strong>Backend:</strong> Node.js, Express 5, TypeScript, Zod validation</li>
+    <li><strong>Database ORM:</strong> Prisma with PostgreSQL</li>
+    <li><strong>Authentication:</strong> JWT tokens with HTTP-only cookies, bcrypt password hashing</li>
+    <li><strong>File Storage:</strong> Cloudinary (images, PDFs, resumes, marksheets)</li>
+    <li><strong>Email Service:</strong> Resend (transactional email, OTP, notifications)</li>
+    <li><strong>Deployment Platform:</strong> Vercel (frontend + serverless backend)</li>
+    <li><strong>Database Hosting:</strong> Neon Serverless PostgreSQL</li>
+    <li><strong>Domain:</strong> vimeettpo.xyz (.xyz TLD via domain registrar)</li>
+  </ul>
+
+  <div class="footer">
+    Vishwaniketan iMEET | TPO Portal Reimbursement Proposal | May 2026 | Page 1 of 4
+  </div>
+</div>
+
+
+<!-- ===================== PAGE 2 ===================== -->
+<div class="page page-break">
+
+  <div class="institute-header">
+    <h1>Vishwaniketan iMEET</h1>
+    <p>TPO Portal — Reimbursement Proposal (Continued)</p>
+  </div>
+
+  <h3 class="section-title">3. Complete Feature List</h3>
+
+  <h4 class="sub-title">3.1 Authentication &amp; Access Control</h4>
+  <ul class="feature-list">
+    <li>Secure user registration with admin approval workflow</li>
+    <li>Role-based access control — Student, Faculty, HOD, and Admin roles</li>
+    <li>JWT-based session management with HTTP-only secure cookies</li>
+    <li>Forgot password and reset password via email OTP</li>
+    <li>Persistent login with token refresh mechanism</li>
+    <li>Account activation / deactivation by administrators</li>
+  </ul>
+
+  <h4 class="sub-title">3.2 Student Module</h4>
+  <ul class="feature-list">
+    <li>Complete student profile with profile photo upload</li>
+    <li>Academic marks entry (Semester-wise, 10th &amp; 12th / Diploma)</li>
+    <li>Marksheet PDF upload per semester / board exam</li>
+    <li>Resume upload and management (PDF)</li>
+    <li>Internship records — add, edit, delete (faculty-verified)</li>
+    <li>Achievement portfolio — add, edit, delete with certificate uploads</li>
+    <li>Project portfolio — tech stack, GitHub links, live URLs, date range</li>
+    <li>Certificate management — upload and track certifications</li>
+    <li>Job listings filtered by academic eligibility criteria</li>
+    <li>One-click job application with application status tracking</li>
+    <li>View all personal job applications and their current statuses</li>
+  </ul>
+
+  <h4 class="sub-title">3.3 Faculty Module</h4>
+  <ul class="feature-list">
+    <li>Department-level dashboard with statistics</li>
+    <li>Verification queue — review and approve/reject student submissions</li>
+    <li>Individual review of internships, achievements, and certificates</li>
+    <li>Access to department student profiles and academic records</li>
+    <li>Department alumni listing and profile access</li>
+    <li>Student notes — add, view, delete private annotations per student</li>
+  </ul>
+
+  <h4 class="sub-title">3.4 HOD Module (Extended Faculty Privileges)</h4>
+  <ul class="feature-list">
+    <li>Full department faculty roster management</li>
+    <li>Create and update faculty accounts within the department</li>
+    <li>Activate / deactivate department faculty accounts</li>
+    <li>All Faculty module features included</li>
+  </ul>
+
+  <h4 class="sub-title">3.5 Admin / Placement Officer Module</h4>
+  <ul class="feature-list">
+    <li>System-wide statistics and KPI dashboard</li>
+    <li>New registration approval and rejection workflow</li>
+    <li>Faculty management — create, update, activate/deactivate</li>
+    <li>Student management — profile view, account status management</li>
+    <li>Student graduation workflow (move active students to alumni)</li>
+    <li>Cross-department verification queue management</li>
+    <li>Placement report generation — exportable as PDF and Excel</li>
+    <li>Job posting — create job listings with eligibility criteria</li>
+    <li>Job management — update details, open/close applications</li>
+    <li>Applicant tracking — view, shortlist, and update application statuses</li>
+    <li>Event management — create, update, cancel placement events</li>
+    <li>Startup listing management for entrepreneurship records</li>
+    <li>Student ambassador / volunteer assignment management</li>
+    <li>Private student notes accessible across roles</li>
+  </ul>
+
+  <h4 class="sub-title">3.6 Alumni Module</h4>
+  <ul class="feature-list">
+    <li>Dedicated alumni portal with profile management</li>
+    <li>Alumni listing visible to faculty and placement office</li>
+  </ul>
+
+  <h4 class="sub-title">3.7 Public Portal</h4>
+  <ul class="feature-list">
+    <li>Publicly accessible landing page with institute branding</li>
+    <li>Company listings and placement statistics (no login required)</li>
+    <li>Upcoming events listing for prospective students</li>
+  </ul>
+
+  <h4 class="sub-title">3.8 Notification System</h4>
+  <ul class="feature-list">
+    <li>In-app notification bell with unread badge count</li>
+    <li>Transactional email notifications (application updates, approvals)</li>
+    <li>Email OTP for password reset with expiry</li>
+    <li>Broadcast notifications to all students or specific roles</li>
+  </ul>
+
+  <h4 class="sub-title">3.9 Aptitude Assessment Module</h4>
+  <ul class="feature-list">
+    <li>Online aptitude test infrastructure for placement preparation</li>
+    <li>Admin-managed question bank and test scheduling</li>
+    <li>Student test participation and score tracking</li>
+  </ul>
+
+  <h4 class="sub-title">3.10 Platform-wide Technical Features</h4>
+  <ul class="feature-list">
+    <li>Cloud-hosted file storage for all uploads (resumes, photos, marksheets, certificates)</li>
+    <li>Input validation and sanitisation on all API endpoints (Zod)</li>
+    <li>Server-side rate limiting to prevent abuse</li>
+    <li>Structured production logging (Pino)</li>
+    <li>In-memory response caching for high-frequency reads</li>
+    <li>PDF report generation (jsPDF + AutoTable)</li>
+    <li>Excel data export (XLSX) for placement data</li>
+    <li>Fully responsive design (mobile, tablet, and desktop)</li>
+    <li>Animated UI with smooth transitions (Framer Motion)</li>
+  </ul>
+
+  <div class="footer">
+    Vishwaniketan iMEET | TPO Portal Reimbursement Proposal | May 2026 | Page 2 of 4
+  </div>
+</div>
+
+
+<!-- ===================== PAGE 3 ===================== -->
+<div class="page page-break">
+
+  <div class="institute-header">
+    <h1>Vishwaniketan iMEET</h1>
+    <p>TPO Portal — Reimbursement Proposal (Continued)</p>
+  </div>
+
+  <h3 class="section-title">4. Infrastructure Cost Breakdown</h3>
+
+  <p>
+    All costs below represent <strong>minimum required paid plans</strong> necessary to support a
+    live, multi-user production application. Free tiers were utilised wherever feasible; charges are
+    raised only where free limits were exceeded by production usage.
+  </p>
+
+  <h4 class="sub-title">4.1 Monthly Recurring Charges</h4>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th style="width:5%">#</th>
+        <th style="width:24%">Service</th>
+        <th style="width:22%">Provider &amp; Plan</th>
+        <th style="width:34%">Purpose</th>
+        <th class="right" style="width:15%">INR/Month</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Frontend &amp; Backend Hosting</td>
+        <td>Vercel — Pro Plan</td>
+        <td>Production deployment of React frontend and Node.js serverless API. Includes CI/CD, edge CDN, and custom domain SSL.</td>
+        <td class="right">₹ 1,680</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Relational Database</td>
+        <td>Neon PostgreSQL — Free + Add-ons</td>
+        <td>Serverless PostgreSQL database hosting for all application data — users, marks, jobs, applications, verifications, events, etc.</td>
+        <td class="right">₹ 350</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>File &amp; Media Storage</td>
+        <td>Cloudinary — Starter</td>
+        <td>Cloud storage and delivery for all user uploads: profile photos, resumes (PDF), marksheets, achievement certificates. Includes CDN delivery.</td>
+        <td class="right">₹ 350</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Transactional Email Service</td>
+        <td>Resend — Basic</td>
+        <td>Sending system emails: account approval, password reset OTP, job application updates, placement notifications, and broadcast alerts.</td>
+        <td class="right">₹ 45</td>
+      </tr>
+      <tr class="subtotal">
+        <td colspan="4">Monthly Total (Recurring)</td>
+        <td class="right">₹ 2,425</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4 class="sub-title">4.2 Annual / One-Time Charges</h4>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th style="width:5%">#</th>
+        <th style="width:22%">Item</th>
+        <th style="width:20%">Provider</th>
+        <th style="width:33%">Description</th>
+        <th class="right" style="width:20%">INR (Annual)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Domain Registration</td>
+        <td>Domain Registrar (.xyz)</td>
+        <td>Custom domain vimeettpo.xyz for professional institute branding and public accessibility.</td>
+        <td class="right">₹ 900</td>
+      </tr>
+      <tr class="subtotal">
+        <td colspan="4">Annual One-Time Charges</td>
+        <td class="right">₹ 900</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4 class="sub-title">4.3 Consolidated Annual Summary</h4>
+
+  <table class="cost-table">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th class="right">Amount (INR)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Vercel Pro — 12 months × ₹1,680</td>
+        <td class="right">₹ 20,160</td>
+      </tr>
+      <tr>
+        <td>Neon PostgreSQL — 12 months × ₹350</td>
+        <td class="right">₹ 4,200</td>
+      </tr>
+      <tr>
+        <td>Cloudinary — 12 months × ₹350</td>
+        <td class="right">₹ 4,200</td>
+      </tr>
+      <tr>
+        <td>Resend — 12 months × ₹45</td>
+        <td class="right">₹ 540</td>
+      </tr>
+      <tr>
+        <td>Domain Registration (vimeettpo.xyz) — Annual</td>
+        <td class="right">₹ 900</td>
+      </tr>
+      <tr class="grand-total">
+        <td><strong>TOTAL REIMBURSEMENT CLAIMED (12 Months)</strong></td>
+        <td class="right"><strong>₹ 30,000 /-</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note-box">
+    <strong>Note:</strong> The figures above represent the minimum operational cost for maintaining
+    a production-grade web application serving the institute's training and placement function.
+    No profit, development fee, or labour charge is included in this claim.
+  </div>
+
+  <div class="footer">
+    Vishwaniketan iMEET | TPO Portal Reimbursement Proposal | May 2026 | Page 3 of 4
+  </div>
+</div>
+
+
+<!-- ===================== PAGE 4 ===================== -->
+<div class="page page-break">
+
+  <div class="institute-header">
+    <h1>Vishwaniketan iMEET</h1>
+    <p>TPO Portal — Reimbursement Proposal (Continued)</p>
+  </div>
+
+  <h3 class="section-title">5. Justification for Each Service</h3>
+
+  <h4 class="sub-title">5.1 Vercel Pro — ₹1,680/month</h4>
+  <p>
+    The Vercel free tier restricts serverless function execution time to 10 seconds and limits
+    bandwidth to 100 GB/month. For an application with file uploads, database queries, and
+    PDF generation, the Pro plan's 60-second function timeout and increased bandwidth allowance
+    are the minimum viable requirements to prevent request timeouts and service disruptions.
+  </p>
+
+  <h4 class="sub-title">5.2 Neon PostgreSQL — ₹350/month</h4>
+  <p>
+    The Neon free tier auto-suspends after 5 minutes of inactivity, causing cold-start delays
+    on every first request. A minimal paid add-on keeps the database connection always-on and
+    provides sufficient compute and storage for the application's active user base.
+  </p>
+
+  <h4 class="sub-title">5.3 Cloudinary — ₹350/month</h4>
+  <p>
+    Every student account can store a profile photo, resume, semester marksheets (up to 8),
+    certificate files, and achievement documents. At scale across hundreds of students, the
+    free tier's 25 monthly credits are exhausted quickly. The paid plan provides the required
+    storage, bandwidth, and transformation capacity to reliably serve files — particularly
+    PDFs for marksheets and resumes — without upload failures or access restrictions.
+  </p>
+
+  <h4 class="sub-title">5.4 Resend — ₹45/month</h4>
+  <p>
+    The system sends transactional emails for account approvals, password reset OTPs
+    (security-critical), and job application status updates. A minimal paid tier is used
+    purely to enable custom domain sending (required for SPF/DKIM email authentication) and
+    to avoid the deliverability restrictions of the free tier.
+  </p>
+
+  <h4 class="sub-title">5.5 Domain Registration (vimeettpo.xyz) — ₹900/year</h4>
+  <p>
+    A custom domain is essential for professional credibility, institute branding, and correct
+    functioning of email authentication records (SPF, DKIM). Using a <code>vercel.app</code>
+    subdomain as the permanent URL would undermine institutional identity and is inconsistent
+    with the application being an official institute system.
+  </p>
+
+  <h3 class="section-title">6. Impact &amp; Value Delivered</h3>
+  <ul class="feature-list">
+    <li>Eliminates manual, paper-based placement data collection across all departments.</li>
+    <li>Provides faculty with a digital verification workflow, reducing processing time from days to hours.</li>
+    <li>Gives the placement office a real-time dashboard and one-click exportable placement reports.</li>
+    <li>Enables students to maintain a verified, digital academic and co-curricular portfolio.</li>
+    <li>Centralises job postings, applications, and eligibility filtering — removing manual shortlisting effort.</li>
+    <li>Creates a permanent, searchable alumni database for alumni relations and reference checks.</li>
+    <li>Provides institute-branded public visibility of placement achievements and events.</li>
+    <li>Built with security best practices (JWT, bcrypt, rate limiting, input validation, CORS).</li>
+  </ul>
+
+  <h3 class="section-title">7. Declaration</h3>
+  <p>
+    I hereby declare that the information provided in this proposal is true and accurate to the
+    best of my knowledge. The costs claimed are solely for third-party infrastructure services
+    used to deploy and maintain the TPO Portal in a live production environment for the benefit
+    of Vishwaniketan iMEET. No personal profit is derived from these services. All bills and
+    invoices are available for inspection upon request.
+  </p>
+
+  <div class="signature-block">
+    <div class="sig-col">
+      <div class="sig-line">
+        Project Developer<br/>
+        (Developer)
+      </div>
+    </div>
+    <div class="sig-col">
+    </div>
+    <div class="sig-col">
+      <div class="sig-line">
+        Training &amp; Placement Officer<br/>
+        Vishwaniketan iMEET
+      </div>
+    </div>
+  </div>
+
+  <br/><br/>
+  <div class="note-box">
+    <strong>Enclosures (to be attached):</strong>
+    Monthly invoices / billing screenshots from Vercel, Neon, Cloudinary, Resend, and domain
+    registrar for the claim period. Digital copies acceptable.
+  </div>
+
+  <div class="footer">
+    Vishwaniketan iMEET | TPO Portal Reimbursement Proposal | May 2026 | Page 4 of 4
+  </div>
+</div>
+
+</body>
+</html>

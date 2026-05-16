@@ -1,0 +1,738 @@
+generator client {
+  provider      = "prisma-client-js"
+  output        = "./output/prismaclient"
+  binaryTargets = ["native", "windows", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==================== ENUMS ====================
+
+enum Role {
+  STUDENT
+  ALUMNI
+  FACULTY
+  ADMIN
+}
+
+enum Department {
+  CSE
+  COMPUTER
+  ELECTRICAL
+  MECHANICAL
+  EXTC
+  CIVIL
+}
+
+enum AcademicYear {
+  FIRST_YEAR
+  SECOND_YEAR
+  THIRD_YEAR
+  FOURTH_YEAR
+}
+
+enum VerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum VerificationEntity {
+  PROFILE
+  MARKS
+  INTERNSHIP
+  ACHIEVEMENT
+}
+
+enum JobType {
+  FULL_TIME
+  INTERNSHIP
+  PPO
+}
+
+enum LocationType {
+  ON_SITE
+  REMOTE
+  HYBRID
+}
+
+enum JobStatus {
+  OPEN
+  CLOSED
+}
+
+enum ApplicationStatus {
+  APPLIED
+  SHORTLISTED
+  INTERVIEW
+  SELECTED
+  REJECTED
+}
+
+enum EventType {
+  PLACEMENT_DRIVE
+  WORKSHOP
+  SEMINAR
+  MOCK_INTERVIEW
+  WEBINAR
+  OTHER
+}
+
+enum EventStatus {
+  UPCOMING
+  ONGOING
+  COMPLETED
+  CANCELLED
+}
+
+enum NotificationType {
+  JOB_POSTED
+  VERIFICATION_RESULT
+  APPLICATION_UPDATE
+  EVENT_CREATED
+  ACCOUNT_STATUS
+  ALUMNI_POST
+  PENDING_VERIFICATION
+  NEW_REGISTRATION
+  ALUMNI_INVITE
+}
+
+enum AlumniPostType {
+  MENTORSHIP
+  REFERRAL
+  CAREER_ADVICE
+  GENERAL
+}
+
+enum TestCategory {
+  APTITUDE
+  TECHNICAL
+  CODING
+  PERSONALITY
+}
+
+enum TestStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum SubmissionStatus {
+  IN_PROGRESS
+  SUBMITTED
+  REVIEWED
+  DISQUALIFIED
+}
+
+enum ResourceFileType {
+  QUESTION_PAPER
+  SYLLABUS
+  EXAM_FORM
+  OTHER_FORM
+  OTHER
+}
+
+enum BroadcastStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  PARTIAL
+  FAILED
+}
+
+enum BroadcastType {
+  JOB_POSTED
+  EVENT_CREATED
+  ACCOUNT_APPROVED
+  ALUMNI_INVITE
+  CUSTOM
+}
+
+// ==================== USER (unified) ====================
+
+model User {
+  id                    Int            @id @default(autoincrement())
+
+  // Identity
+  fullName              String
+  legalName             String?
+  emailId               String         @unique
+  password              String
+  contactNo             String?
+  profilePic            String?
+
+  // Role
+  role                  Role           @default(STUDENT)
+
+  // Student / Alumni fields (optional, used when role is STUDENT or ALUMNI)
+  studentId             String?
+  department            Department?
+  academicYear          AcademicYear?
+  parentsContactNo      String?
+  skills                String[]
+  socialProfile         String?
+  resumeUrl             String?
+  avgCgpa               Float?         @default(0)
+
+  // Faculty-specific
+  isHOD                 Boolean        @default(false)
+
+  // Account status
+  isVerified            Boolean        @default(false) // Admin approved registration
+  isActive              Boolean        @default(true)
+
+  // Admin-controlled placement / internship tracking
+  isPlaced              Boolean        @default(false)
+  onInternshipUntil     DateTime?      // Set to end date while on internship; null = not on internship
+
+  // Password reset
+  resetPasswordToken    String?
+  resetPasswordExpires  DateTime?
+
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+
+  // Relations - student
+  marks                 Marks?
+  internships           Internship[]
+  achievements          Achievement[]
+  projects              Project[]
+  applications          JobApplication[]
+
+  // Relations - alumni
+  alumniProfile         AlumniProfile?
+  alumniPosts           AlumniPost[]
+
+  // Relations - notes
+  notesAbout            StudentNote[] @relation("StudentNotes")
+  notesAuthored         StudentNote[] @relation("NoteAuthors")
+
+  // Relations - verification
+  verificationRequests  VerificationRequest[] @relation("StudentVerifications")
+  reviewedRequests      VerificationRequest[] @relation("FacultyReviews")
+
+  // Relations - admin (jobs/events created)
+  jobsCreated           Job[]
+  eventsCreated         Event[]
+
+  // Relations - notifications
+  notifications         Notification[]
+
+  // Relations - aptitude
+  aptitudeTestsCreated  AptitudeTest[]      @relation("AptitudeTestAuthor")
+  testSubmissions       TestSubmission[]    @relation("StudentSubmissions")
+  submissionReviews     TestSubmission[]    @relation("FacultySubmissionReviews")
+
+  // Relations - resources
+  resourcesAdded        Resource[]
+
+  // Relations - certificates
+  certificates          Certificate[]
+  ambassadorAssignments AmbassadorAssignment[]
+
+  @@index([department])
+  @@index([fullName])
+  @@index([role])
+  @@index([emailId])
+}
+
+model Startup {
+  id           String   @id @default(cuid())
+  name         String
+  tagline      String?
+  industry     String?
+  website      String?
+  location     String?
+  contactName  String?
+  contactEmail String?
+  contactPhone String?
+  foundedYear  Int?
+  notes        String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([name])
+  @@index([isActive])
+}
+
+model AmbassadorAssignment {
+  id                 String   @id @default(cuid())
+  studentId          Int
+  student            User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  roleName           String
+  servedAcademicYear String
+  createdAt          DateTime @default(now())
+
+  @@unique([studentId, roleName, servedAcademicYear])
+  @@index([studentId])
+  @@index([roleName])
+}
+
+// ==================== CERTIFICATE ====================
+
+model Certificate {
+  id              String    @id @default(uuid())
+  userId          Int
+  student         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title           String
+  issuingOrg      String
+  issueDate       DateTime?
+  expiryDate      DateTime?
+  credentialId    String?
+  credentialUrl   String?
+  certificateUrl  String?
+
+  isVerified      Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([userId])
+}
+
+// ==================== VERIFICATION ====================
+
+model VerificationRequest {
+  id           String             @id @default(uuid())
+  userId       Int
+  student      User               @relation("StudentVerifications", fields: [userId], references: [id], onDelete: Cascade)
+
+  // JSON blob: { fieldName: { oldValue, newValue } } - captures all pending changes
+  changes      Json
+  entityType   VerificationEntity
+  entityId     String?            // Optional: id of internship/achievement being edited
+
+  status       VerificationStatus @default(PENDING)
+  reviewedById Int?
+  reviewedBy   User?              @relation("FacultyReviews", fields: [reviewedById], references: [id])
+  remarks      String?
+
+  createdAt    DateTime           @default(now())
+  reviewedAt   DateTime?
+
+  @@index([userId])
+  @@index([status])
+  @@index([entityType])
+}
+
+// ==================== MARKS ====================
+
+model Marks {
+  id                String   @id @default(uuid())
+  userId            Int      @unique
+  student           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  sscPercentage     Float?
+  hscPercentage     Float?
+  diplomaPercentage Float?
+  sem1              Float?
+  sem2              Float?
+  sem3              Float?
+  sem4              Float?
+  sem5              Float?
+  sem6              Float?
+  sem7              Float?
+  sem8              Float?
+
+  sscMarksheetUrl     String?
+  hscMarksheetUrl     String?
+  diplomaMarksheetUrl String?
+  sem1MarksheetUrl    String?
+  sem2MarksheetUrl    String?
+  sem3MarksheetUrl    String?
+  sem4MarksheetUrl    String?
+  sem5MarksheetUrl    String?
+  sem6MarksheetUrl    String?
+  sem7MarksheetUrl    String?
+  sem8MarksheetUrl    String?
+
+  isVerified        Boolean  @default(false)
+  updatedAt         DateTime @updatedAt
+}
+
+// ==================== INTERNSHIP ====================
+
+model Internship {
+  id              String    @id @default(uuid())
+  userId          Int
+  student         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  companyName     String
+  role            String
+  roleDescription String?
+  duration        String?
+  startDate       DateTime
+  endDate         DateTime?
+  certificateUrl  String?
+
+  hrName          String?
+  hrEmail         String?
+  hrPhone         String?
+
+  isVerified      Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([userId])
+}
+
+// ==================== ACHIEVEMENT ====================
+
+model Achievement {
+  id              String    @id @default(uuid())
+  userId          Int
+  student         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title           String
+  description     String?
+  category        String?   // academic / sports / cultural / technical / other
+  certificateUrl  String?
+  achievementDate DateTime?
+
+  isVerified      Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([userId])
+}
+
+// ==================== PROJECT ====================
+
+model Project {
+  id          String    @id @default(uuid())
+  userId      Int
+  student     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title       String
+  description String?
+  techStack   String[]
+  projectUrl  String?
+  repoUrl     String?
+  startDate   DateTime?
+  endDate     DateTime?
+
+  isVerified  Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([userId])
+}
+
+// ==================== ALUMNI ====================
+
+model AlumniProfile {
+  id             Int            @id @default(autoincrement())
+  userId         Int            @unique
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  currentOrg     String?
+  currentRole    String?
+  package        String?
+  graduationYear Int?
+  placedBy       String?
+
+  pastOrgs       PastOrg[]
+  higherStudies  HigherStudies?
+
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+model PastOrg {
+  id          Int           @id @default(autoincrement())
+  alumniId    Int
+  alumni      AlumniProfile @relation(fields: [alumniId], references: [id], onDelete: Cascade)
+
+  companyName String
+  role        String
+  joiningDate DateTime
+  leavingDate DateTime?
+}
+
+model HigherStudies {
+  id          Int           @id @default(autoincrement())
+  alumniId    Int           @unique
+  alumni      AlumniProfile @relation(fields: [alumniId], references: [id], onDelete: Cascade)
+
+  collegeName String
+  branch      String
+  location    String
+  joiningDate DateTime
+  leavingDate DateTime?
+}
+
+model AlumniPost {
+  id          String         @id @default(uuid())
+  alumniId    Int
+  alumni      User           @relation(fields: [alumniId], references: [id], onDelete: Cascade)
+
+  postType    AlumniPostType
+  title       String
+  body        String
+  companyName String?
+  role        String?
+  contactInfo String?
+
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@index([alumniId])
+  @@index([postType])
+  @@index([createdAt])
+}
+
+// ==================== JOB ====================
+
+model Job {
+  id                  String           @id @default(uuid())
+  createdById         Int
+  createdBy           User             @relation(fields: [createdById], references: [id])
+
+  companyName         String
+  companyLogo         String?
+  jobTitle            String
+  description         String
+  package             String
+  location            String
+  locationType        LocationType
+  jobType             JobType
+
+  eligibleDepartments Department[]
+  minCgpa             Float?
+  eligibleYears       AcademicYear[]
+
+  deadline            DateTime
+  rounds              String[]
+  openings            Int?
+  bondDetails         String?
+  additionalNotes     String?
+  status              JobStatus        @default(OPEN)
+
+  applications        JobApplication[]
+
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+
+  @@index([status])
+  @@index([deadline])
+}
+
+model JobApplication {
+  id        String            @id @default(uuid())
+  jobId     String
+  job       Job               @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  studentId Int
+  student   User              @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  status    ApplicationStatus @default(APPLIED)
+  appliedAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  @@unique([jobId, studentId])
+  @@index([status])
+  @@index([studentId])
+}
+
+// ==================== EVENT ====================
+
+model Event {
+  id          String      @id @default(uuid())
+  title       String
+  description String?
+  eventDate   DateTime
+  eventTime   String?
+  location    String?
+  type        EventType
+  status      EventStatus @default(UPCOMING)
+
+  createdById Int
+  createdBy   User        @relation(fields: [createdById], references: [id])
+
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([eventDate])
+  @@index([status])
+}
+
+// ==================== NOTIFICATION ====================
+
+model Notification {
+  id        String           @id @default(uuid())
+  userId    Int
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title     String
+  message   String
+  type      NotificationType
+  link      String?
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  @@index([userId, isRead])
+  @@index([createdAt])
+}
+
+// ==================== APTITUDE (P3 - last scope) ====================
+
+model AptitudeTest {
+  id               Int          @id @default(autoincrement())
+  title            String
+  description      String
+  rules            String[]
+  totalTime        Int          // minutes; 0 = no timer (homework)
+  totalMarks       Int
+  minimumMarks     Int
+  allowedAttempts  Int          @default(1)
+  tabSwitchLimit   Int          @default(3)
+  category         TestCategory
+  status           TestStatus   @default(DRAFT)
+  isActive         Boolean      @default(false)
+  isHomework       Boolean      @default(false)
+
+  department       Department?  // null = open to all departments
+  eligibleYears    AcademicYear[]
+
+  createdById      Int
+  createdBy        User         @relation("AptitudeTestAuthor", fields: [createdById], references: [id])
+
+  questions        Question[]
+  sections         AptitudeSection[]
+  submissions      TestSubmission[]
+
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  @@index([status])
+  @@index([createdById])
+}
+
+model AptitudeSection {
+  id          String       @id @default(cuid())
+  testId      Int
+  test        AptitudeTest @relation(fields: [testId], references: [id], onDelete: Cascade)
+  name        String
+  description String?
+  order       Int          @default(0)
+  timeLimit   Int?
+  questions   Question[]
+  createdAt   DateTime     @default(now())
+
+  @@index([testId])
+}
+
+model Question {
+  id            Int              @id @default(autoincrement())
+  testId        Int
+  test          AptitudeTest     @relation(fields: [testId], references: [id], onDelete: Cascade)
+  sectionId     String?
+  section       AptitudeSection? @relation(fields: [sectionId], references: [id])
+
+  question      String
+  option1       String
+  option2       String?
+  option3       String?
+  option4       String?
+  correctOption String
+  marks         Int
+
+  @@index([testId])
+  @@index([sectionId])
+}
+
+model TestSubmission {
+  id              String           @id @default(uuid())
+  testId          Int
+  test            AptitudeTest     @relation(fields: [testId], references: [id], onDelete: Cascade)
+  studentId       Int
+  student         User             @relation("StudentSubmissions", fields: [studentId], references: [id], onDelete: Cascade)
+
+  attemptNumber   Int              @default(1)
+  startedAt       DateTime         @default(now())
+  submittedAt     DateTime?
+
+  answers         Json
+  autoScore       Int?
+  finalScore      Int?
+  tabSwitchCount  Int              @default(0)
+  violations      Int              @default(0)
+
+  status          SubmissionStatus @default(IN_PROGRESS)
+  reviewedById    Int?
+  reviewedBy      User?            @relation("FacultySubmissionReviews", fields: [reviewedById], references: [id])
+  reviewedAt      DateTime?
+  facultyRemarks  String?
+
+  @@unique([testId, studentId, attemptNumber])
+  @@index([studentId])
+  @@index([testId])
+  @@index([status])
+}
+
+// ==================== BROADCAST (bulk email jobs) ====================
+
+model BroadcastJob {
+  id           String          @id @default(uuid())
+  type         BroadcastType
+  subject      String
+  htmlBody     String
+  recipientIds Int[]           // User IDs
+  status       BroadcastStatus @default(PENDING)
+  totalCount   Int
+  sentCount    Int             @default(0)
+  failedCount  Int             @default(0)
+  failures     Json?           // [{ userId, email, error }]
+  attempts     Int             @default(0)
+  maxAttempts  Int             @default(3)
+  lastError    String?
+  createdById  Int?
+  createdAt    DateTime        @default(now())
+  startedAt    DateTime?
+  completedAt  DateTime?
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+// ==================== RESOURCES ====================
+
+model Resource {
+  id           String          @id @default(cuid())
+  title        String
+  description  String?
+  fileUrl      String
+  fileType     ResourceFileType
+  department   Department?
+  academicYear AcademicYear?
+  addedById    Int
+  addedBy      User            @relation(fields: [addedById], references: [id])
+  isActive     Boolean         @default(true)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  @@index([department])
+  @@index([academicYear])
+  @@index([fileType])
+  @@index([addedById])
+}
+
+// ==================== STUDENT NOTES ====================
+
+model StudentNote {
+  id        String   @id @default(cuid())
+  studentId Int
+  student   User     @relation("StudentNotes", fields: [studentId], references: [id], onDelete: Cascade)
+  authorId  Int
+  author    User     @relation("NoteAuthors", fields: [authorId], references: [id], onDelete: Cascade)
+  content   String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([studentId])
+  @@index([authorId])
+}

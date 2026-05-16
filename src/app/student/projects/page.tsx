@@ -1,0 +1,4 @@
+﻿"use client";
+
+export { Projects as default } from "@/views/student/Projects";
+
