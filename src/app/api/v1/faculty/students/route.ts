@@ -20,6 +20,7 @@ export async function GET(request: NextRequest) {
   const where: Prisma.UserWhereInput = {
     role: "STUDENT",
     department: (user.department ?? undefined) as never,
+    isVerified: true,
   };
 
   if (isVerified !== null) where.isVerified = isVerified === "true";

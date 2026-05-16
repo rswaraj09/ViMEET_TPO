@@ -15,6 +15,7 @@ import {
   type UpdateMarksPayload,
 } from "@/lib/api/student";
 import { ExternalLink, FileText, Upload } from "lucide-react";
+import { marksheetImageUrl } from "@/lib/utils";
 
 type ScoreKey =
   | "sscPercentage"
@@ -335,7 +336,7 @@ function ScoreField({
                 </span>
               </div>
               <a
-                href={currentUrl}
+                href={marksheetImageUrl(currentUrl)}
                 target="_blank"
                 rel="noreferrer"
                 className="ml-2 shrink-0 text-neutral-400 hover:text-neutral-900"

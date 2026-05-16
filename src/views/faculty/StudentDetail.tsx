@@ -28,7 +28,7 @@ import {
 } from "@/lib/api/faculty";
 import { departmentLabel } from "@/lib/api/student";
 import { extractErrorMessage } from "@/lib/api/base";
-import { resumeViewUrl } from "@/lib/utils";
+import { resumeViewUrl, marksheetImageUrl } from "@/lib/utils";
 import {
   FacultySidebar,
   type FacultyTab,
@@ -553,7 +553,7 @@ function Metric({
       </p>
       {pdfUrl && (
         <a
-          href={pdfUrl}
+          href={marksheetImageUrl(pdfUrl)}
           target="_blank"
           rel="noreferrer"
           className="mt-1.5 inline-flex items-center gap-1 text-[10px] font-medium text-neutral-600 underline hover:text-neutral-900"

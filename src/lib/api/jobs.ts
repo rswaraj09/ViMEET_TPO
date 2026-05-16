@@ -192,8 +192,8 @@ export interface StudentJobDetail {
 }
 
 export const studentListEligibleJobs = async (): Promise<StudentJob[]> => {
-  const { data } = await api.get<{ items: StudentJob[] }>("/student/jobs");
-  return data.items;
+  const { data } = await api.get<{ jobs?: StudentJob[]; items?: StudentJob[] }>("/student/jobs");
+  return data.jobs ?? data.items ?? [];
 };
 
 export const studentGetJob = async (id: string): Promise<StudentJobDetail> => {
@@ -214,7 +214,8 @@ export const studentListMyApplications = async (): Promise<
   Array<JobApplication & { job: Job }>
 > => {
   const { data } = await api.get<{
-    items: Array<JobApplication & { job: Job }>;
+    applications?: Array<JobApplication & { job: Job }>;
+    items?: Array<JobApplication & { job: Job }>;
   }>("/student/applications");
-  return data.items;
+  return data.applications ?? data.items ?? [];
 };
