@@ -6,96 +6,90 @@ Role-based Training & Placement Office portal for Vishwaniketan iMEET — Studen
 
 | Layer | Technologies |
 |-------|-------------|
-| Backend | Express.js 5, TypeScript, Prisma 6, PostgreSQL, Zod 4, JWT (HTTP-only cookies), Resend, Cloudinary, Pino |
-| Frontend | React 19, TypeScript, Vite, Tailwind CSS 4, React Router 7, Axios, Sonner |
+| **Core Framework** | Next.js 15 (App Router), React 19, TypeScript |
+| **Styling** | Tailwind CSS 4, Radix UI Primitives, Lucide Icons, Framer Motion |
+| **Backend API** | Next.js Route Handlers, Zod 4 Validation, JWT (HTTP-only cookies), Pino Logging |
+| **Database** | PostgreSQL, Prisma ORM 6 |
+| **Third-Party Services**| Resend (Emails), Cloudinary (File Uploads) |
 
 ## Local Setup
 
 **Prerequisites:** Node.js 20+, PostgreSQL 14+, [Cloudinary](https://cloudinary.com) and [Resend](https://resend.com) accounts.
 
 ```bash
-git clone https://github.com/sachinchaurasiya360/tpo
+git clone https://github.com/rswaraj09/tpo
 cd TPO
-cd backend && npm install
-cd ../frontend && npm install
+npm install
 ```
 
-**`backend/.env`**
+**`.env`**
+Create a `.env` file at the root of your project:
 
 ```env
 DATABASE_URL="postgresql://user:password@localhost:5432/tpo_db"
-PORT=3000
-FRONTEND_URL="http://localhost:5173"
 JWT_SECRET="replace-with-a-long-random-string"
 RESEND_API_KEY="re_xxx"
 RESEND_FROM_EMAIL="TPO <noreply@yourdomain.com>"
 CLOUDINARY_CLOUD_NAME="xxx"
 CLOUDINARY_API_KEY="xxx"
 CLOUDINARY_API_SECRET="xxx"
+NEXT_PUBLIC_APP_URL="http://localhost:3000"
 ```
 
-**`frontend/.env`**
-
-```env
-VITE_API_URL="http://localhost:3000"
-```
-
+**Database Initialization**
 ```bash
-cd backend && npx prisma migrate dev
+npx prisma generate
+npx prisma db push
 # Seed first admin via Prisma Studio (bcrypt-hash the password)
-npx prisma studio
+npm run db:studio
 ```
 
 ## Running
 
 ```bash
-cd backend && npm run dev    # port 3000
-cd frontend && npm run dev   # port 5173
+npm run dev
 ```
 
 ## Roles
 
 | Role | Landing | Key capabilities |
 |------|---------|-----------------|
-| **Student** | `/student` | Edit profile/marks/internships/achievements ? faculty verification |
+| **Student** | `/student` | Edit profile/marks/internships/achievements → faculty verification |
 | **Faculty** | `/faculty` | Approve/reject student data in their department |
 | **HOD** | `/faculty` | All faculty capabilities + manage dept faculty |
 | **Admin** | `/admin` | Approve registrations, manage students/faculty, post jobs/events |
-| **Alumni** | `/alumni` | Edit alumni profile |
+| **Alumni** | `/alumni` | Edit alumni profile, post referrals/mentorships |
 
 ## Verification Model
 
 - **Field-level diff** (profile, marks) — changes held in `VerificationRequest` until faculty approves; existing values stay live.
 - **Row-level flag** (internships, achievements) — new rows start `isVerified=false`; faculty flips to approve.
 
-## API
+## API Structure
 
-All routes under `/api/v1`, auth via HTTP-only `token` cookie.
+API is built via Next.js Route Handlers (`src/app/api/v1/*`) and uses HTTP-only `token` cookie authentication.
 
 | Prefix | Guards |
 |--------|--------|
-| `/auth/*` | public |
-| `/student/*` | `isAuthenticated` + `isStudent` |
-| `/faculty/*` | `isAuthenticated` + `isFaculty` |
-| `/admin/*` | `isAuthenticated` + `isAdmin` |
-| `/alumni/*` | `isAuthenticated` + `isAlumni` |
+| `/api/v1/auth/*` | public |
+| `/api/v1/student/*` | `isAuthenticated` + `isStudent` |
+| `/api/v1/faculty/*` | `isAuthenticated` + `isFaculty` |
+| `/api/v1/admin/*` | `isAuthenticated` + `isAdmin` |
+| `/api/v1/alumni/*` | `isAuthenticated` + `isAlumni` |
 
 ## File Uploads
 
-Cloudinary via multer, **2 MB max** (client + server enforced).
+Uploads handled securely through Cloudinary, **2 MB max** (client + server enforced).
 
 | Type | Accepted |
 |------|----------|
-| Profile picture | JPG, PNG, WebP, SVG |
-| Resume | PDF |
-| Certificate / Marksheet | PDF or image |
+| Profile picture | JPG, PNG, WebP |
+| Resume | PDF (Viewable inline) |
+| Certificate / Marksheet | PDF or Image |
 
 ---
 
 Built for the Training & Placement Cell of Vishwaniketan iMEET.
 
-
-
-implement the proctored test module where camera open is required 
-
-
+## To-Do List
+- implement the proctored test module where camera open is required
