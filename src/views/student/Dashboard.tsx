@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -57,6 +57,7 @@ interface FormState {
   academicYear: AcademicYear | "";
   skills: string;
   socialProfile: string;
+  portfolioUrl: string;
 }
 
 const toFormState = (u: StudentProfile): FormState => ({
@@ -69,6 +70,7 @@ const toFormState = (u: StudentProfile): FormState => ({
   academicYear: (u.academicYear ?? "") as FormState["academicYear"],
   skills: (u.skills ?? []).join(", "),
   socialProfile: u.socialProfile ?? "",
+  portfolioUrl: u.portfolioUrl ?? "",
 });
 
 const buildPayload = (form: FormState): UpdateProfilePayload => {
@@ -83,6 +85,7 @@ const buildPayload = (form: FormState): UpdateProfilePayload => {
       .map((s) => s.trim())
       .filter(Boolean),
     socialProfile: form.socialProfile || "",
+    portfolioUrl: form.portfolioUrl || "",
   };
   if (form.department) payload.department = form.department as Department;
   if (form.academicYear)
@@ -366,10 +369,18 @@ export function StudentDashboard() {
                 <FormField
                   id="socialProfile"
                   label="linkedin Id"
-                  className="md:col-span-2"
+                  className="md:col-span-1"
                   value={form.socialProfile}
                   onChange={(v) => set("socialProfile", v)}
                   placeholder="https://linkedin.com/in/…"
+                />
+                <FormField
+                  id="portfolioUrl"
+                  label="Portfolio Link"
+                  className="md:col-span-1"
+                  value={form.portfolioUrl}
+                  onChange={(v) => set("portfolioUrl", v)}
+                  placeholder="https://yourportfolio.com"
                 />
               </div>
             </Section>

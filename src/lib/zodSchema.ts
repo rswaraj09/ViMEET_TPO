@@ -1,4 +1,4 @@
-﻿import { z } from "zod";
+import { z } from "zod";
 import {
   AcademicYear,
   Role,
@@ -115,6 +115,7 @@ export const updateProfileSchema = z.object({
   academicYear: z.nativeEnum(AcademicYear).optional(),
   skills: z.array(z.string()).optional(),
   socialProfile: z.string().url().optional().or(z.literal("")),
+  portfolioUrl: z.string().url().optional().or(z.literal("")),
   profilePic: z.string().url().optional(),
   resumeUrl: z.string().url().optional(),
 });

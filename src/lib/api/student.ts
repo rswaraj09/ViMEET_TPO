@@ -28,6 +28,7 @@ export interface StudentProfile {
   academicYear: AcademicYear | null;
   skills: string[];
   socialProfile: string | null;
+  portfolioUrl: string | null;
   profilePic: string | null;
   resumeUrl: string | null;
   role: string;
@@ -72,6 +73,7 @@ export interface UpdateProfilePayload {
   academicYear?: AcademicYear;
   skills?: string[];
   socialProfile?: string;
+  portfolioUrl?: string;
   profilePic?: string;
   resumeUrl?: string;
 }

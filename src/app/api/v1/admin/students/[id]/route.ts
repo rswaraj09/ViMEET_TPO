@@ -35,6 +35,7 @@ export async function GET(
         resumeUrl: true,
         skills: true,
         socialProfile: true,
+        portfolioUrl: true,
         isVerified: true,
         isActive: true,
         isPlaced: true,

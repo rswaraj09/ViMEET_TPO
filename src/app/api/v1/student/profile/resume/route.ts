@@ -27,8 +27,8 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(await file.arrayBuffer());
     const result = await uploadBuffer(buffer, {
       folder: "tpo/resumes",
-      resourceType: "raw",
-      publicId: `resume-${user.id}.pdf`,
+      resourceType: "auto",
+      publicId: `resume-${user.id}`,
     });
 
     await prisma.user.update({

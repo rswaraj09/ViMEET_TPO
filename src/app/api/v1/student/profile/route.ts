@@ -15,6 +15,7 @@ const profileSelect = {
   avgCgpa: true,
   skills: true,
   socialProfile: true,
+  portfolioUrl: true,
   profilePic: true,
   resumeUrl: true,
   role: true,
@@ -65,6 +66,7 @@ export async function PATCH(request: NextRequest) {
       academicYear,
       skills,
       socialProfile,
+      portfolioUrl,
     } = body;
 
     const updated = await prisma.user.update({
@@ -79,6 +81,7 @@ export async function PATCH(request: NextRequest) {
         ...(academicYear !== undefined && { academicYear }),
         ...(skills !== undefined && { skills }),
         ...(socialProfile !== undefined && { socialProfile }),
+        ...(portfolioUrl !== undefined && { portfolioUrl }),
       },
       select: profileSelect,
     });
