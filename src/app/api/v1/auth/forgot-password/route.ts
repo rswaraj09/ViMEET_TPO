@@ -32,7 +32,8 @@ export async function POST(request: NextRequest) {
       data: { resetPasswordToken: token, resetPasswordExpires: expiry },
     });
 
-    const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL}/reset-password/${token}`;
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://www.vimeettpo.xyz";
+    const resetUrl = `${appUrl}/reset-password/${token}`;
     await sendMail({ to: emailId, ...passwordResetEmail(user.fullName, resetUrl) });
 
     return NextResponse.json({ message: "If the email exists, a reset link was sent." });

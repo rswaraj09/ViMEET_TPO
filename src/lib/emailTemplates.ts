@@ -28,7 +28,7 @@ export const accountApprovedEmail = (fullName: string): { subject: string; html:
     `<p>Your TPO account has been verified and approved.</p>
      <p>You can now log in and start building your placement profile.</p>
      <p style="margin: 24px 0;">
-       <a href="${process.env.FRONTEND_URL}/login" style="background: #1e40af; color: #fff; padding: 12px 24px; border-radius: 6px; text-decoration: none; display: inline-block;">Login to Portal</a>
+       <a href="https://www.vimeettpo.xyz/login" style="background: #1e40af; color: #fff; padding: 12px 24px; border-radius: 6px; text-decoration: none; display: inline-block;">Login to Portal</a>
      </p>`
   ),
 });
@@ -115,7 +115,7 @@ export const facultyWelcomeEmail = (
      </p>
      <p>Please log in and change your password from the profile settings immediately.</p>
      <p style="margin: 24px 0;">
-       <a href="${process.env.FRONTEND_URL}/login" style="background: #1e40af; color: #fff; padding: 12px 24px; border-radius: 6px; text-decoration: none; display: inline-block;">Login to Portal</a>
+       <a href="https://www.vimeettpo.xyz/login" style="background: #1e40af; color: #fff; padding: 12px 24px; border-radius: 6px; text-decoration: none; display: inline-block;">Login to Portal</a>
      </p>`
   ),
 });
@@ -133,7 +133,7 @@ export const applicationStatusEmail = (
      <p>New status: <strong style="color: #1e40af;">${status.replace(/_/g, " ")}</strong></p>
      <p>Check your dashboard for next steps.</p>
      <p style="margin: 24px 0;">
-       <a href="${process.env.FRONTEND_URL}/student/jobs" style="background: #1e40af; color: #fff; padding: 12px 24px; border-radius: 6px; text-decoration: none; display: inline-block;">View Dashboard</a>
+       <a href="https://www.vimeettpo.xyz/student/jobs" style="background: #1e40af; color: #fff; padding: 12px 24px; border-radius: 6px; text-decoration: none; display: inline-block;">View Dashboard</a>
      </p>`
   ),
 });
