@@ -189,13 +189,13 @@ export function ApprovalsTab() {
 
   return (
     <div className="space-y-4">
-      {/* Sub-tab bar */}
-      <div className="flex flex-wrap gap-2">
+      {/* Sub-tab bar — horizontally scrollable on mobile */}
+      <div className="flex gap-2 overflow-x-auto pb-0.5 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {subTabs.map((st) => (
           <button
             key={st.key}
             onClick={() => setSubTab(st.key)}
-            className={`inline-flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+            className={`inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
               subTab === st.key
                 ? "bg-neutral-900 text-white"
                 : "bg-white text-neutral-700 border border-neutral-200 hover:bg-neutral-50"
@@ -296,13 +296,13 @@ function RegistrationsSection({
 
   return (
     <div className="rounded-lg border border-neutral-200 bg-white">
-      <div className="flex items-center gap-2 border-b border-neutral-200 px-5 py-4">
-        <UserPlus className="h-4 w-4 text-neutral-500" />
-        <h2 className="text-base font-semibold text-neutral-900">
+      <div className="flex items-center gap-2 border-b border-neutral-200 px-4 py-4 sm:px-5">
+        <UserPlus className="h-4 w-4 shrink-0 text-neutral-500" />
+        <h2 className="text-sm font-semibold text-neutral-900 sm:text-base">
           Registration queue
         </h2>
         {items.length > 0 && <PendingBadge count={items.length} />}
-        <p className="ml-auto text-sm text-neutral-500">
+        <p className="ml-auto hidden text-sm text-neutral-500 sm:block">
           New student sign-ups awaiting activation
         </p>
       </div>
@@ -328,47 +328,50 @@ function RegistrationsSection({
             return (
               <li
                 key={r.id}
-                className="flex flex-wrap items-start gap-4 px-5 py-4 hover:bg-neutral-50"
+                className="px-4 py-4 hover:bg-neutral-50 sm:px-5"
               >
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-neutral-900 text-xs font-semibold text-white">
-                  {initials}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                    <p className="truncate text-sm font-semibold text-neutral-900">
-                      {r.fullName}
-                    </p>
-                    <span className="text-xs text-neutral-400">·</span>
-                    <a
-                      href={`mailto:${r.emailId}`}
-                      className="truncate text-sm text-neutral-600 hover:underline"
-                    >
-                      {r.emailId}
-                    </a>
+                <div className="flex items-start gap-3">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-neutral-900 text-xs font-semibold text-white">
+                    {initials}
                   </div>
-                  <dl className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-xs text-neutral-500">
-                    <MetaCell label="ID" value={r.studentId ?? "—"} />
-                    <MetaCell
-                      label="Dept"
-                      value={departmentLabel(r.department) || "—"}
-                    />
-                    <MetaCell
-                      label="Year"
-                      value={
-                        YEAR_LABELS[r.academicYear as AcademicYear] ??
-                        r.academicYear ??
-                        "—"
-                      }
-                    />
-                    <MetaCell label="Contact" value={r.contactNo ?? "—"} />
-                    <MetaCell label="Submitted" value={submittedRel} />
-                  </dl>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                      <p className="text-sm font-semibold text-neutral-900">
+                        {r.fullName}
+                      </p>
+                      <a
+                        href={`mailto:${r.emailId}`}
+                        className="truncate text-xs text-neutral-500 hover:underline"
+                      >
+                        {r.emailId}
+                      </a>
+                    </div>
+                    <dl className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1 text-xs text-neutral-500">
+                      <MetaCell label="ID" value={r.studentId ?? "—"} />
+                      <MetaCell
+                        label="Dept"
+                        value={departmentLabel(r.department) || "—"}
+                      />
+                      <MetaCell
+                        label="Year"
+                        value={
+                          YEAR_LABELS[r.academicYear as AcademicYear] ??
+                          r.academicYear ??
+                          "—"
+                        }
+                      />
+                      <MetaCell label="Contact" value={r.contactNo ?? "—"} />
+                      <MetaCell label="Submitted" value={submittedRel} />
+                    </dl>
+                  </div>
                 </div>
-                <ApproveRejectButtons
-                  busy={busyId === r.id}
-                  onApprove={() => onApprove(r.id)}
-                  onReject={() => onReject(r.id)}
-                />
+                <div className="mt-3 flex justify-end gap-2">
+                  <ApproveRejectButtons
+                    busy={busyId === r.id}
+                    onApprove={() => onApprove(r.id)}
+                    onReject={() => onReject(r.id)}
+                  />
+                </div>
               </li>
             );
           })}
@@ -400,9 +403,9 @@ function VerificationRequestSection({
 
   return (
     <div className="rounded-lg border border-neutral-200 bg-white">
-      <div className="flex items-center gap-2 border-b border-neutral-200 px-5 py-4">
-        <ClipboardCheck className="h-4 w-4 text-neutral-500" />
-        <h2 className="text-base font-semibold text-neutral-900">
+      <div className="flex items-center gap-2 border-b border-neutral-200 px-4 py-4 sm:px-5">
+        <ClipboardCheck className="h-4 w-4 shrink-0 text-neutral-500" />
+        <h2 className="text-sm font-semibold text-neutral-900 sm:text-base">
           Profile &amp; Marks verifications
         </h2>
         {items.length > 0 && <PendingBadge count={items.length} />}
@@ -417,36 +420,32 @@ function VerificationRequestSection({
           {items.map((item) => {
             const isExpanded = expandedId === item.id;
             return (
-              <li key={item.id} className="px-5 py-4 hover:bg-neutral-50">
-                <div className="flex flex-wrap items-center gap-4">
+              <li key={item.id} className="px-4 py-4 hover:bg-neutral-50 sm:px-5">
+                <div className="flex items-center gap-3">
                   <StudentStub student={item.student} />
-                  <div className="min-w-0 flex-1">
-                    <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-200">
-                      {item.entityType}
-                    </span>
-                    <span className="ml-2 text-xs text-neutral-500">
-                      {Object.keys(item.changes).length} field
-                      {Object.keys(item.changes).length !== 1 ? "s" : ""} changed
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => onToggle(item.id)}
-                      className="inline-flex items-center gap-1 rounded-md border border-neutral-200 px-2 py-1 text-xs text-neutral-600 hover:bg-neutral-100"
-                    >
-                      {isExpanded ? (
-                        <ChevronUp className="h-3 w-3" />
-                      ) : (
-                        <ChevronDown className="h-3 w-3" />
-                      )}
-                      {isExpanded ? "Hide" : "View"} changes
-                    </button>
-                    <ApproveRejectButtons
-                      busy={busyId === item.id}
-                      onApprove={() => onApprove(item)}
-                      onReject={() => onReject(item)}
-                    />
-                  </div>
+                  <button
+                    onClick={() => onToggle(item.id)}
+                    className="ml-auto inline-flex shrink-0 items-center gap-1 rounded-md border border-neutral-200 px-2 py-1 text-xs text-neutral-600 hover:bg-neutral-100"
+                  >
+                    {isExpanded ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+                    <span className="hidden sm:inline">{isExpanded ? "Hide" : "View"} changes</span>
+                  </button>
+                </div>
+                <div className="mt-2 pl-11">
+                  <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-200">
+                    {item.entityType}
+                  </span>
+                  <span className="ml-2 text-xs text-neutral-500">
+                    {Object.keys(item.changes).length} field
+                    {Object.keys(item.changes).length !== 1 ? "s" : ""} changed
+                  </span>
+                </div>
+                <div className="mt-3 flex justify-end gap-2">
+                  <ApproveRejectButtons
+                    busy={busyId === item.id}
+                    onApprove={() => onApprove(item)}
+                    onReject={() => onReject(item)}
+                  />
                 </div>
                 {isExpanded && (
                   <div className="mt-3 rounded-md border border-neutral-100 bg-neutral-50 p-3">
@@ -466,7 +465,7 @@ function VerificationRequestSection({
                             <span className="line-through text-red-500">
                               {String(diff.oldValue ?? "—")}
                             </span>
-                            <ArrowRight className="h-3 w-3 text-neutral-400 flex-shrink-0" />
+                            <ArrowRight className="h-3 w-3 shrink-0 text-neutral-400" />
                             <span className="font-medium text-emerald-700">
                               {String(diff.newValue ?? "—")}
                             </span>
@@ -507,9 +506,9 @@ function InternshipSection({
 
   return (
     <div className="rounded-lg border border-neutral-200 bg-white">
-      <div className="flex items-center gap-2 border-b border-neutral-200 px-5 py-4">
-        <Briefcase className="h-4 w-4 text-neutral-500" />
-        <h2 className="text-base font-semibold text-neutral-900">
+      <div className="flex items-center gap-2 border-b border-neutral-200 px-4 py-4 sm:px-5">
+        <Briefcase className="h-4 w-4 shrink-0 text-neutral-500" />
+        <h2 className="text-sm font-semibold text-neutral-900 sm:text-base">
           Internship verifications
         </h2>
         {items.length > 0 && <PendingBadge count={items.length} />}
@@ -525,33 +524,27 @@ function InternshipSection({
             const isExpanded = expandedId === item.id;
             const d = item.data;
             return (
-              <li key={item.id} className="px-5 py-4 hover:bg-neutral-50">
-                <div className="flex flex-wrap items-center gap-4">
+              <li key={item.id} className="px-4 py-4 hover:bg-neutral-50 sm:px-5">
+                <div className="flex items-center gap-3">
                   <StudentStub student={item.student} />
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-semibold text-neutral-900">
-                      {d.companyName}
-                    </p>
-                    <p className="text-xs text-neutral-500">{d.role}</p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => onToggle(item.id)}
-                      className="inline-flex items-center gap-1 rounded-md border border-neutral-200 px-2 py-1 text-xs text-neutral-600 hover:bg-neutral-100"
-                    >
-                      {isExpanded ? (
-                        <ChevronUp className="h-3 w-3" />
-                      ) : (
-                        <ChevronDown className="h-3 w-3" />
-                      )}
-                      {isExpanded ? "Hide" : "View"} details
-                    </button>
-                    <ApproveRejectButtons
-                      busy={busyId === item.id}
-                      onApprove={() => onApprove(item)}
-                      onReject={() => onReject(item)}
-                    />
-                  </div>
+                  <button
+                    onClick={() => onToggle(item.id)}
+                    className="ml-auto inline-flex shrink-0 items-center gap-1 rounded-md border border-neutral-200 px-2 py-1 text-xs text-neutral-600 hover:bg-neutral-100"
+                  >
+                    {isExpanded ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+                    <span className="hidden sm:inline">{isExpanded ? "Hide" : "View"} details</span>
+                  </button>
+                </div>
+                <div className="mt-2 pl-11">
+                  <p className="text-sm font-semibold text-neutral-900">{d.companyName}</p>
+                  <p className="text-xs text-neutral-500">{d.role}</p>
+                </div>
+                <div className="mt-3 flex justify-end gap-2">
+                  <ApproveRejectButtons
+                    busy={busyId === item.id}
+                    onApprove={() => onApprove(item)}
+                    onReject={() => onReject(item)}
+                  />
                 </div>
                 {isExpanded && (
                   <div className="mt-3 rounded-md border border-neutral-100 bg-neutral-50 p-3 space-y-2">
@@ -629,9 +622,9 @@ function AchievementSection({
 
   return (
     <div className="rounded-lg border border-neutral-200 bg-white">
-      <div className="flex items-center gap-2 border-b border-neutral-200 px-5 py-4">
-        <Award className="h-4 w-4 text-neutral-500" />
-        <h2 className="text-base font-semibold text-neutral-900">
+      <div className="flex items-center gap-2 border-b border-neutral-200 px-4 py-4 sm:px-5">
+        <Award className="h-4 w-4 shrink-0 text-neutral-500" />
+        <h2 className="text-sm font-semibold text-neutral-900 sm:text-base">
           Achievement verifications
         </h2>
         {items.length > 0 && <PendingBadge count={items.length} />}
@@ -647,37 +640,27 @@ function AchievementSection({
             const isExpanded = expandedId === item.id;
             const d = item.data;
             return (
-              <li key={item.id} className="px-5 py-4 hover:bg-neutral-50">
-                <div className="flex flex-wrap items-center gap-4">
+              <li key={item.id} className="px-4 py-4 hover:bg-neutral-50 sm:px-5">
+                <div className="flex items-center gap-3">
                   <StudentStub student={item.student} />
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-semibold text-neutral-900">
-                      {d.title}
-                    </p>
-                    {d.category && (
-                      <p className="text-xs text-neutral-500 capitalize">
-                        {d.category}
-                      </p>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => onToggle(item.id)}
-                      className="inline-flex items-center gap-1 rounded-md border border-neutral-200 px-2 py-1 text-xs text-neutral-600 hover:bg-neutral-100"
-                    >
-                      {isExpanded ? (
-                        <ChevronUp className="h-3 w-3" />
-                      ) : (
-                        <ChevronDown className="h-3 w-3" />
-                      )}
-                      {isExpanded ? "Hide" : "View"} details
-                    </button>
-                    <ApproveRejectButtons
-                      busy={busyId === item.id}
-                      onApprove={() => onApprove(item)}
-                      onReject={() => onReject(item)}
-                    />
-                  </div>
+                  <button
+                    onClick={() => onToggle(item.id)}
+                    className="ml-auto inline-flex shrink-0 items-center gap-1 rounded-md border border-neutral-200 px-2 py-1 text-xs text-neutral-600 hover:bg-neutral-100"
+                  >
+                    {isExpanded ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+                    <span className="hidden sm:inline">{isExpanded ? "Hide" : "View"} details</span>
+                  </button>
+                </div>
+                <div className="mt-2 pl-11">
+                  <p className="text-sm font-semibold text-neutral-900">{d.title}</p>
+                  {d.category && <p className="text-xs capitalize text-neutral-500">{d.category}</p>}
+                </div>
+                <div className="mt-3 flex justify-end gap-2">
+                  <ApproveRejectButtons
+                    busy={busyId === item.id}
+                    onApprove={() => onApprove(item)}
+                    onReject={() => onReject(item)}
+                  />
                 </div>
                 {isExpanded && (
                   <div className="mt-3 rounded-md border border-neutral-100 bg-neutral-50 p-3 space-y-2">
@@ -747,9 +730,9 @@ function CertificateSection({
 
   return (
     <div className="rounded-lg border border-neutral-200 bg-white">
-      <div className="flex items-center gap-2 border-b border-neutral-200 px-5 py-4">
-        <ShieldCheck className="h-4 w-4 text-neutral-500" />
-        <h2 className="text-base font-semibold text-neutral-900">
+      <div className="flex items-center gap-2 border-b border-neutral-200 px-4 py-4 sm:px-5">
+        <ShieldCheck className="h-4 w-4 shrink-0 text-neutral-500" />
+        <h2 className="text-sm font-semibold text-neutral-900 sm:text-base">
           Certificate verifications
         </h2>
         {items.length > 0 && <PendingBadge count={items.length} />}
@@ -765,33 +748,27 @@ function CertificateSection({
             const isExpanded = expandedId === item.id;
             const d = item.data;
             return (
-              <li key={item.id} className="px-5 py-4 hover:bg-neutral-50">
-                <div className="flex flex-wrap items-center gap-4">
+              <li key={item.id} className="px-4 py-4 hover:bg-neutral-50 sm:px-5">
+                <div className="flex items-center gap-3">
                   <StudentStub student={item.student} />
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-semibold text-neutral-900">
-                      {d.title}
-                    </p>
-                    <p className="text-xs text-neutral-500">{d.issuingOrg}</p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => onToggle(item.id)}
-                      className="inline-flex items-center gap-1 rounded-md border border-neutral-200 px-2 py-1 text-xs text-neutral-600 hover:bg-neutral-100"
-                    >
-                      {isExpanded ? (
-                        <ChevronUp className="h-3 w-3" />
-                      ) : (
-                        <ChevronDown className="h-3 w-3" />
-                      )}
-                      {isExpanded ? "Hide" : "View"} details
-                    </button>
-                    <ApproveRejectButtons
-                      busy={busyId === item.id}
-                      onApprove={() => onApprove(item)}
-                      onReject={() => onReject(item)}
-                    />
-                  </div>
+                  <button
+                    onClick={() => onToggle(item.id)}
+                    className="ml-auto inline-flex shrink-0 items-center gap-1 rounded-md border border-neutral-200 px-2 py-1 text-xs text-neutral-600 hover:bg-neutral-100"
+                  >
+                    {isExpanded ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+                    <span className="hidden sm:inline">{isExpanded ? "Hide" : "View"} details</span>
+                  </button>
+                </div>
+                <div className="mt-2 pl-11">
+                  <p className="text-sm font-semibold text-neutral-900">{d.title}</p>
+                  <p className="text-xs text-neutral-500">{d.issuingOrg}</p>
+                </div>
+                <div className="mt-3 flex justify-end gap-2">
+                  <ApproveRejectButtons
+                    busy={busyId === item.id}
+                    onApprove={() => onApprove(item)}
+                    onReject={() => onReject(item)}
+                  />
                 </div>
                 {isExpanded && (
                   <div className="mt-3 rounded-md border border-neutral-100 bg-neutral-50 p-3 space-y-2">
@@ -872,7 +849,7 @@ function StudentStub({
       .join("")
       .toUpperCase() || "ST";
   return (
-    <div className="flex items-center gap-2 min-w-0 w-48 flex-shrink-0">
+    <div className="flex min-w-0 flex-1 items-center gap-2">
       {student.profilePic ? (
         <img
           src={student.profilePic}
