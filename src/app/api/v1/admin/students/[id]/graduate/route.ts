@@ -37,8 +37,8 @@ export async function POST(
     });
 
     // Send the alumni invite email
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-    const inviteLink = `${appUrl}/alumni`;
+    const appUrl = process.env.FRONTEND_URL || process.env.NEXT_PUBLIC_APP_URL || "https://www.vimeettpo.xyz";
+    const inviteLink = `${appUrl}/login`;
     const email = alumniInviteEmail(student.fullName || "Alumni", inviteLink);
 
     await sendMail({
