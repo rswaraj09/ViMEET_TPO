@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getAuthUser, unauthorized, forbidden } from "@/lib/apiAuth";
+import { recalculateAvgCgpa } from "@/lib/cgpa";
 
 const SCORE_FIELDS = [
   "sscPercentage",
@@ -86,6 +87,7 @@ export async function PATCH(request: NextRequest) {
         where: { userId: user.id },
         data: updateData,
       });
+      await recalculateAvgCgpa(user.id);
       return NextResponse.json({
         marks: updated,
         pendingVerification: null,

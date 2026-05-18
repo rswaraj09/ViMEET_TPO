@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { extractErrorMessage } from "@/lib/api/base";
 import { departmentLabel } from "@/lib/api/student";
+import { resumeViewUrl } from "@/lib/utils";
 import {
   listResources,
   createResource,
@@ -165,7 +166,7 @@ export function ResourcesView({ canAdd, canDelete, forceDepartment }: Props) {
                 </div>
                 <div className="flex items-center gap-2">
                   <a
-                    href={r.fileUrl}
+                    href={resumeViewUrl(r.fileUrl)}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center gap-1.5 rounded-md border border-neutral-200 px-2.5 py-1.5 text-xs font-medium text-neutral-700 hover:bg-neutral-50"

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getAuthUser, unauthorized, forbidden } from "@/lib/apiAuth";
+import { recalculateAvgCgpa } from "@/lib/cgpa";
 
 export async function POST(
   request: NextRequest,
@@ -45,6 +46,7 @@ export async function POST(
           create: { userId: vr.userId, ...updates },
           update: updates,
         });
+        await recalculateAvgCgpa(vr.userId);
       }
     } else if (status === "REJECTED" && vr.entityType === "PROFILE") {
       await prisma.user.delete({ where: { id: vr.userId } });
