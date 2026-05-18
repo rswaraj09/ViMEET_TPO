@@ -7,12 +7,13 @@ export async function GET(request: NextRequest) {
   if (!user) return unauthorized();
 
   try {
-    const notifications = await prisma.notification.findMany({
+    const items = await prisma.notification.findMany({
       where: { userId: user.id },
       orderBy: { createdAt: "desc" },
       take: 50,
     });
-    return NextResponse.json({ notifications });
+    const unreadCount = items.filter((n) => !n.isRead).length;
+    return NextResponse.json({ items, unreadCount });
   } catch (error) {
     console.error("[notifications]", error);
     return NextResponse.json({ message: "Internal server error" }, { status: 500 });

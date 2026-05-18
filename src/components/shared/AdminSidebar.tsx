@@ -17,6 +17,7 @@ import {
   ChevronRight,
   LibraryBig,
   Brain,
+  BarChart3,
 } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
@@ -33,7 +34,8 @@ export type AdminTab =
   | "startups"
   | "ambassadors"
   | "resources"
-  | "aptitude";
+  | "aptitude"
+  | "statistics";
 
 interface Item {
   key: AdminTab;
@@ -53,6 +55,7 @@ const items: Item[] = [
   { key: "ambassadors", label: "Student Ambassador", icon: ShieldCheck },
   { key: "resources", label: "Resources", icon: LibraryBig },
   { key: "aptitude", label: "Aptitude Results", icon: Brain },
+  { key: "statistics", label: "Statistics", icon: BarChart3 },
 ];
 
 interface AdminSidebarProps {

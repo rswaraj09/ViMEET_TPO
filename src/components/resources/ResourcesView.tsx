@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { extractErrorMessage } from "@/lib/api/base";
 import { departmentLabel } from "@/lib/api/student";
-import { resumeViewUrl } from "@/lib/utils";
 import {
   listResources,
   createResource,
@@ -67,12 +66,19 @@ interface Props {
 export function ResourcesView({ canAdd, canDelete, forceDepartment }: Props) {
   const [resources, setResources] = useState<Resource[] | null>(null);
   const [filterType, setFilterType] = useState<ResourceFileType | "">("");
+  const [filterDept, setFilterDept] = useState<Department | "">("");
+  const [filterYear, setFilterYear] = useState<AcademicYear | "">("");
+  const [search, setSearch] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [editing, setEditing] = useState<Resource | null>(null);
 
   const load = async () => {
     try {
-      setResources(await listResources(filterType || undefined));
+      setResources(await listResources({
+        fileType: filterType || undefined,
+        department: filterDept || undefined,
+        academicYear: filterYear || undefined,
+      }));
     } catch (e) {
       toast.error(extractErrorMessage(e));
     }
@@ -81,7 +87,13 @@ export function ResourcesView({ canAdd, canDelete, forceDepartment }: Props) {
   useEffect(() => {
     load();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterType]);
+  }, [filterType, filterDept, filterYear]);
+
+  const displayed = resources?.filter((r) =>
+    search.trim() === "" ||
+    r.title.toLowerCase().includes(search.toLowerCase()) ||
+    (r.description ?? "").toLowerCase().includes(search.toLowerCase())
+  ) ?? null;
 
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this resource permanently?")) return;
@@ -98,6 +110,12 @@ export function ResourcesView({ canAdd, canDelete, forceDepartment }: Props) {
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-2">
+          <Input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search resources…"
+            className="h-9 w-48 text-sm"
+          />
           <select
             value={filterType}
             onChange={(e) => setFilterType(e.target.value as ResourceFileType | "")}
@@ -105,11 +123,39 @@ export function ResourcesView({ canAdd, canDelete, forceDepartment }: Props) {
           >
             <option value="">All types</option>
             {FILE_TYPE_VALUES.map((t) => (
-              <option key={t} value={t}>
-                {RESOURCE_FILE_TYPE_LABELS[t]}
-              </option>
+              <option key={t} value={t}>{RESOURCE_FILE_TYPE_LABELS[t]}</option>
             ))}
           </select>
+          {!forceDepartment && (
+            <select
+              value={filterDept}
+              onChange={(e) => setFilterDept(e.target.value as Department | "")}
+              className="h-9 rounded-md border border-neutral-200 bg-white px-3 text-sm"
+            >
+              <option value="">All departments</option>
+              {DEPT_VALUES.map((d) => (
+                <option key={d} value={d}>{departmentLabel(d)}</option>
+              ))}
+            </select>
+          )}
+          <select
+            value={filterYear}
+            onChange={(e) => setFilterYear(e.target.value as AcademicYear | "")}
+            className="h-9 rounded-md border border-neutral-200 bg-white px-3 text-sm"
+          >
+            <option value="">All years</option>
+            {YEAR_VALUES.map((y) => (
+              <option key={y} value={y}>{YEAR_LABELS[y]}</option>
+            ))}
+          </select>
+          {(filterType || filterDept || filterYear || search) && (
+            <button
+              onClick={() => { setFilterType(""); setFilterDept(""); setFilterYear(""); setSearch(""); }}
+              className="flex h-9 items-center gap-1 rounded-md border border-neutral-200 bg-white px-2.5 text-xs text-neutral-500 hover:bg-neutral-50"
+            >
+              <X className="h-3.5 w-3.5" /> Clear
+            </button>
+          )}
         </div>
         {canAdd && (
           <Button size="sm" onClick={() => { setEditing(null); setShowForm(true); }}>
@@ -118,27 +164,27 @@ export function ResourcesView({ canAdd, canDelete, forceDepartment }: Props) {
         )}
       </div>
 
-      {resources === null ? (
+      {displayed === null ? (
         <div className="space-y-2">
           {[0, 1, 2].map((i) => (
             <div key={i} className="h-20 animate-pulse rounded-lg border border-neutral-200 bg-white" />
           ))}
         </div>
-      ) : resources.length === 0 ? (
+      ) : displayed.length === 0 ? (
         <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-neutral-300 bg-white px-6 py-16 text-center">
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 text-neutral-500">
             <BookOpen className="h-5 w-5" />
           </div>
-          <p className="mt-3 text-sm font-medium text-neutral-900">No resources yet</p>
+          <p className="mt-3 text-sm font-medium text-neutral-900">No resources found</p>
           <p className="mt-1 text-sm text-neutral-500">
             {canAdd
               ? "Add question papers, syllabi, or forms for students."
-              : "No resources have been uploaded for your department and year."}
+              : "No resources match the selected filters."}
           </p>
         </div>
       ) : (
         <ul className="space-y-2">
-          {resources.map((r) => (
+          {displayed.map((r) => (
             <li key={r.id} className="rounded-lg border border-neutral-200 bg-white p-4">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0 flex-1">
@@ -166,7 +212,7 @@ export function ResourcesView({ canAdd, canDelete, forceDepartment }: Props) {
                 </div>
                 <div className="flex items-center gap-2">
                   <a
-                    href={resumeViewUrl(r.fileUrl)}
+                    href={r.fileUrl}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center gap-1.5 rounded-md border border-neutral-200 px-2.5 py-1.5 text-xs font-medium text-neutral-700 hover:bg-neutral-50"

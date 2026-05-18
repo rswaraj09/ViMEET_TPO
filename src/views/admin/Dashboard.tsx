@@ -15,6 +15,7 @@ import { AmbassadorsTab } from "./tabs/AmbassadorsTab";
 import { AlumniTab } from "./tabs/AlumniTab";
 import { ResourcesView } from "@/components/resources/ResourcesView";
 import { AdminAptitudeResults } from "./tabs/AdminAptitudeResults";
+import { StatisticsTab } from "./tabs/StatisticsTab";
 
 const TAB_TITLES: Record<AdminTab, { title: string; subtitle: string }> = {
   overview: {
@@ -62,6 +63,10 @@ const TAB_TITLES: Record<AdminTab, { title: string; subtitle: string }> = {
     title: "Aptitude Results",
     subtitle: "View all department test results, export reports, and track absent students.",
   },
+  statistics: {
+    title: "Statistics",
+    subtitle: "Charts and analytics across placement, academics, and aptitude tests.",
+  },
 };
 
 const ADMIN_TABS: AdminTab[] = [
@@ -76,6 +81,7 @@ const ADMIN_TABS: AdminTab[] = [
   "ambassadors",
   "resources",
   "aptitude",
+  "statistics",
 ];
 
 export function AdminDashboard() {
@@ -146,6 +152,7 @@ export function AdminDashboard() {
             {tab === "ambassadors" && <AmbassadorsTab />}
             {tab === "resources" && <ResourcesView canAdd canDelete />}
             {tab === "aptitude" && <AdminAptitudeResults />}
+            {tab === "statistics" && <StatisticsTab />}
           </div>
         </main>
       </div>

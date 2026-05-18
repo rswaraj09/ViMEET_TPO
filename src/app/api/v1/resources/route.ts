@@ -10,12 +10,16 @@ export async function GET(request: NextRequest) {
   try {
     const url = new URL(request.url);
     const fileType = url.searchParams.get("fileType") || undefined;
+    const department = url.searchParams.get("department") || undefined;
+    const academicYear = url.searchParams.get("academicYear") || undefined;
 
     // Build filter based on role
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const where: any = { isActive: true };
 
     if (fileType) where.fileType = fileType;
+    if (department) where.department = department;
+    if (academicYear) where.academicYear = academicYear;
 
     if (user.role === "STUDENT") {
       // Students see: resources for their dept+year, OR admin resources (no dept)
@@ -92,7 +96,7 @@ export async function POST(request: NextRequest) {
       const buffer = Buffer.from(bytes);
       const result = await uploadBuffer(buffer, {
         folder: "tpo/resources",
-        resourceType: "raw",
+        resourceType: "auto",
       });
       resolvedFileUrl = result.secure_url;
     }

@@ -35,9 +35,17 @@ export interface Resource {
   };
 }
 
-export const listResources = async (fileType?: ResourceFileType): Promise<Resource[]> => {
-  const params = fileType ? `?fileType=${fileType}` : "";
-  const res = await api.get<{ resources: Resource[] }>(`/resources${params}`);
+export const listResources = async (filters?: {
+  fileType?: ResourceFileType;
+  department?: string;
+  academicYear?: string;
+}): Promise<Resource[]> => {
+  const params = new URLSearchParams();
+  if (filters?.fileType) params.set("fileType", filters.fileType);
+  if (filters?.department) params.set("department", filters.department);
+  if (filters?.academicYear) params.set("academicYear", filters.academicYear);
+  const qs = params.toString();
+  const res = await api.get<{ resources: Resource[] }>(`/resources${qs ? `?${qs}` : ""}`);
   return res.data.resources;
 };
 
