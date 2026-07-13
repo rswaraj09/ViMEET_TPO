@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
       data: { resetPasswordToken: token, resetPasswordExpires: expiry },
     });
 
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://www.vimeettpo.xyz";
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
     const resetUrl = `${appUrl}/reset-password/${token}`;
     await sendMail({ to: emailId, ...passwordResetEmail(user.fullName, resetUrl) });
 

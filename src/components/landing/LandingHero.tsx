@@ -180,7 +180,7 @@ export function LandingHero() {
             className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-foreground/70 md:text-xl"
           >
             The official TPO portal for{" "}
-            <span className="font-semibold text-foreground">Vishwaniketan iMEET</span>.
+            <span className="font-semibold text-foreground">Pillai University</span>.
             Verified profiles, curated openings, one-click applications — all in one place.
           </motion.p>
 

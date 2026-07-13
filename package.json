@@ -1,8 +1,9 @@
 {
   "name": "tpo-portal",
   "version": "1.0.0",
-  "description": "Vishwaniketan Training & Placement Office Portal",
+  "description": "Pillai University Training & Placement Office Portal",
   "private": true,
+  "type": "commonjs",
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",

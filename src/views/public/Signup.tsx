@@ -28,12 +28,12 @@ export function Signup() {
           <div className="mt-16">
             <div className="flex items-center gap-3">
               <img
-                src="/logo.png"
-                alt="Vishwaniketan"
+                src="/logopillai.png"
+                alt="Pillai University"
                 className="h-12 w-12 rounded-md bg-white p-1"
               />
               <div>
-                <p className="font-semibold">Vishwaniketan</p>
+                <p className="font-semibold">Pillai University</p>
                 <p className="text-xs text-neutral-400">TPO Portal</p>
               </div>
             </div>
@@ -73,7 +73,7 @@ export function Signup() {
         </div>
 
         <footer className="px-6 py-4 text-center text-xs text-neutral-400 border-t border-neutral-100">
-          © {new Date().getFullYear()} Vishwaniketan iMEET · TPO Portal
+          © {new Date().getFullYear()} Pillai University · TPO Portal
         </footer>
       </main>
     </div>

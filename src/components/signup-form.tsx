@@ -102,7 +102,7 @@ export function SignupForm() {
           Create your account
         </h1>
         <p className="mt-2 text-sm text-neutral-500">
-          Join the Vishwaniketan TPO portal in a few steps.
+          Join the Pillai University TPO portal in a few steps.
         </p>
       </div>
 

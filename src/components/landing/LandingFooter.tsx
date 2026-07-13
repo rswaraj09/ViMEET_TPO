@@ -29,12 +29,12 @@ export function LandingFooter({ onScrollTo }: LandingFooterProps) {
                 <GraduationCap className="h-5 w-5" />
               </div>
               <span className="text-xl font-bold text-foreground">
-                Vishwaniketan TPO
+                Pillai University TPO
               </span>
             </div>
             <p className="mb-5 max-w-md text-sm leading-relaxed text-foreground/60">
-              The official Training &amp; Placement portal for Vishwaniketan
-              iMEET — empowering students to launch careers with top recruiters
+              The official Training &amp; Placement portal for Pillai
+              University — empowering students to launch careers with top recruiters
               across India.
             </p>
           </div>
@@ -88,15 +88,15 @@ export function LandingFooter({ onScrollTo }: LandingFooterProps) {
             <ul className="space-y-2.5 text-sm text-foreground/60">
               <li className="flex items-start gap-2">
                 <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
-                <span>Vishwaniketan iMEET, Khalapur</span>
+                <span>Pillai University</span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 flex-shrink-0 text-primary" />
                 <a
-                  href="mailto:tpo@vishwaniketan.edu.in"
+                  href="mailto:tpo@pillai.edu.in"
                   className="transition-colors hover:text-primary"
                 >
-                  tpo@vishwaniketan.edu.in
+                  tpo@pillai.edu.in
                 </a>
               </li>
               <li className="flex items-center gap-2">
@@ -114,7 +114,7 @@ export function LandingFooter({ onScrollTo }: LandingFooterProps) {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-6 text-sm text-foreground/40 md:flex-row">
           <p>
-            &copy; 2026 Vishwaniketan Training &amp; Placement Cell. All rights
+            &copy; 2026 Pillai University Training &amp; Placement Cell. All rights
             reserved.
           </p>
           <div className="flex gap-5">

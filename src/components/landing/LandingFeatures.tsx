@@ -35,7 +35,7 @@ const FEATURES = [
   {
     title: "Alumni Network",
     description:
-      "Tap into a growing network of Vishwaniketan alumni across India's top tech and finance firms.",
+      "Tap into a growing network of Pillai University alumni across India's top tech and finance firms.",
     icon: Users,
     iconColor: "text-amber-600",
     iconBg: "bg-amber-50",

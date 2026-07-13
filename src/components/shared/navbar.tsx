@@ -17,8 +17,8 @@ export function Navbar({ buttonName, onClick }: NavbarProps) {
     <div className="pl-2 flex justify-between bg-white shadow-sm rounded-sm">
       <div>
         <img
-          src="/logo.png"
-          alt="Vishwaniketan logo"
+          src="/logopillai.png"
+          alt="Pillai University logo"
           className="h-16 w-20 cursor-pointer"
           onClick={() => router.push("/")}
         />

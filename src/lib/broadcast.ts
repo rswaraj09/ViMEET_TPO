@@ -4,7 +4,7 @@ import logger from "@/lib/logger";
 import { BroadcastType } from "../../prisma/output/prismaclient";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "TPO Vishwaniketan <noreply@example.com>";
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "TPO Pillai University <noreply@example.com>";
 
 const BATCH_SIZE = 100;
 const BATCH_DELAY_MS = 350; // ~3 batches/sec (under Resend's 5/sec limit)

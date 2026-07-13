@@ -36,13 +36,13 @@ export function LandingNav({ onScrollTo }: LandingNavProps) {
             className="flex items-center gap-2.5"
           >
             <img
-              src="/logo.png"
-              alt="Vishwaniketan logo"
+              src="/logopillai.png"
+              alt="Pillai University logo"
               className="h-10 w-auto"
             />
             <div className="hidden flex-col leading-tight sm:flex">
               <span className="text-sm font-bold tracking-tight text-foreground">
-                Vishwaniketan
+                Pillai University
               </span>
               <span className="text-[11px] font-medium uppercase tracking-wider text-primary">
                 TPO Portal

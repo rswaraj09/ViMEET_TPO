@@ -75,14 +75,14 @@ export function StudentSidebar() {
         }`}
       >
         <img
-          src="/logo.png"
-          alt="Vishwaniketan"
+          src="/logopillai.png"
+          alt="Pillai University"
           className="h-8 w-8 flex-shrink-0"
         />
         {!collapsed && (
           <div className="flex flex-col leading-tight text-left">
             <span className="text-sm font-semibold tracking-tight text-neutral-900">
-              Vishwaniketan
+              Pillai University
             </span>
             <span className="text-[10px] font-medium uppercase tracking-wider text-neutral-500">
               Student Portal

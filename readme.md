@@ -1,6 +1,6 @@
-# Vishwaniketan TPO Portal
+# Pillai University TPO Portal
 
-Role-based Training & Placement Office portal for Vishwaniketan iMEET — Students, Alumni, Faculty, HODs, and Admins, with a faculty verification workflow for all student data.
+Role-based Training & Placement Office portal for Pillai University — Students, Alumni, Faculty, HODs, and Admins, with a faculty verification workflow for all student data.
 
 ## Tech Stack
 
@@ -40,8 +40,7 @@ NEXT_PUBLIC_APP_URL="http://localhost:3000"
 ```bash
 npx prisma generate
 npx prisma db push
-# Seed first admin via Prisma Studio (bcrypt-hash the password)
-npm run db:studio
+npm run db:seed
 ```
 
 ## Running
@@ -59,6 +58,19 @@ npm run dev
 | **HOD** | `/faculty` | All faculty capabilities + manage dept faculty |
 | **Admin** | `/admin` | Approve registrations, manage students/faculty, post jobs/events |
 | **Alumni** | `/alumni` | Edit alumni profile, post referrals/mentorships |
+
+## Test Accounts
+
+`npm run db:seed` (`prisma/seed.ts`) creates one verified, active account per role, plus sample marks/internships/jobs/events/notifications/etc. so every table has data to browse. The login page shows a "Quick demo login" panel that autofills these — set `NEXT_PUBLIC_SHOW_DEMO_LOGINS=false` to hide it on a real production deploy.
+
+| Role | Email | Password |
+|------|-------|----------|
+| Admin | `admin@pillai.edu.in` | `Admin@12345` |
+| Faculty | `faculty@pillai.edu.in` | `Faculty@12345` |
+| Student | `student@pillai.edu.in` | `Student@12345` |
+| Alumni | `alumni@pillai.edu.in` | `Alumni@12345` |
+
+Override any of these via env vars (see `ADMIN_EMAIL`/`ADMIN_PASSWORD`, `FACULTY_EMAIL`/`FACULTY_PASSWORD`, `STUDENT_EMAIL`/`STUDENT_PASSWORD`, `ALUMNI_EMAIL`/`ALUMNI_PASSWORD` in `prisma/seed.ts`) — remember to update the matching `NEXT_PUBLIC_DEMO_*` vars so the login page panel stays in sync.
 
 ## Verification Model
 
@@ -89,7 +101,7 @@ Uploads handled securely through Cloudinary, **2 MB max** (client + server enfor
 
 ---
 
-Built for the Training & Placement Cell of Vishwaniketan iMEET.
+Built for the Training & Placement Cell of Pillai University.
 
 ## To-Do List
 - implement the proctored test module where camera open is required

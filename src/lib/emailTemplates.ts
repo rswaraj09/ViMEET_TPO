@@ -1,18 +1,20 @@
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+
 const wrap = (title: string, body: string): string => `
 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #1a1a1a;">
   <div style="background: linear-gradient(135deg, #1e40af, #3b82f6); padding: 24px; border-radius: 12px 12px 0 0; text-align: center;">
-    <h1 style="color: #fff; margin: 0; font-size: 22px;">Vishwaniketan TPO</h1>
+    <h1 style="color: #fff; margin: 0; font-size: 22px;">Pillai University TPO</h1>
   </div>
   <div style="background: #fff; border: 1px solid #e5e7eb; border-top: none; padding: 32px 24px; border-radius: 0 0 12px 12px;">
     <h2 style="margin-top: 0; color: #111827;">${title}</h2>
     ${body}
     <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 24px 0;" />
-    <p style="color: #6b7280; font-size: 13px; margin: 0;">Regards,<br/><strong>Training & Placement Cell</strong><br/>Vishwaniketan iMEET</p>
+    <p style="color: #6b7280; font-size: 13px; margin: 0;">Regards,<br/><strong>Training & Placement Cell</strong><br/>Pillai University</p>
   </div>
 </div>`;
 
 export const welcomeEmail = (fullName: string): { subject: string; html: string } => ({
-  subject: "Welcome to Vishwaniketan TPO Portal",
+  subject: "Welcome to Pillai University TPO Portal",
   html: wrap(
     `Welcome, ${fullName}!`,
     `<p>Your account has been created successfully.</p>
@@ -28,7 +30,7 @@ export const accountApprovedEmail = (fullName: string): { subject: string; html:
     `<p>Your TPO account has been verified and approved.</p>
      <p>You can now log in and start building your placement profile.</p>
      <p style="margin: 24px 0;">
-       <a href="https://www.vimeettpo.xyz/login" style="background: #1e40af; color: #fff; padding: 12px 24px; border-radius: 6px; text-decoration: none; display: inline-block;">Login to Portal</a>
+       <a href="${APP_URL}/login" style="background: #1e40af; color: #fff; padding: 12px 24px; border-radius: 6px; text-decoration: none; display: inline-block;">Login to Portal</a>
      </p>`
   ),
 });
@@ -104,7 +106,7 @@ export const facultyWelcomeEmail = (
   tempPassword: string,
   isHOD: boolean
 ): { subject: string; html: string } => ({
-  subject: "Your Vishwaniketan TPO faculty account is ready",
+  subject: "Your Pillai University TPO faculty account is ready",
   html: wrap(
     `Welcome, ${fullName}`,
     `<p>An administrator has created a ${isHOD ? "<strong>HOD</strong>" : "faculty"} account for you on the TPO Portal.</p>
@@ -115,7 +117,7 @@ export const facultyWelcomeEmail = (
      </p>
      <p>Please log in and change your password from the profile settings immediately.</p>
      <p style="margin: 24px 0;">
-       <a href="https://www.vimeettpo.xyz/login" style="background: #1e40af; color: #fff; padding: 12px 24px; border-radius: 6px; text-decoration: none; display: inline-block;">Login to Portal</a>
+       <a href="${APP_URL}/login" style="background: #1e40af; color: #fff; padding: 12px 24px; border-radius: 6px; text-decoration: none; display: inline-block;">Login to Portal</a>
      </p>`
   ),
 });
@@ -133,7 +135,7 @@ export const applicationStatusEmail = (
      <p>New status: <strong style="color: #1e40af;">${status.replace(/_/g, " ")}</strong></p>
      <p>Check your dashboard for next steps.</p>
      <p style="margin: 24px 0;">
-       <a href="https://www.vimeettpo.xyz/student/jobs" style="background: #1e40af; color: #fff; padding: 12px 24px; border-radius: 6px; text-decoration: none; display: inline-block;">View Dashboard</a>
+       <a href="${APP_URL}/student/jobs" style="background: #1e40af; color: #fff; padding: 12px 24px; border-radius: 6px; text-decoration: none; display: inline-block;">View Dashboard</a>
      </p>`
   ),
 });
@@ -142,7 +144,7 @@ export const alumniInviteEmail = (
   fullName: string,
   inviteLink: string
 ): { subject: string; html: string } => ({
-  subject: "You're now a Vishwaniketan Alumni - Activate your profile",
+  subject: "You're now a Pillai University Alumni - Activate your profile",
   html: wrap(
     `Congratulations, ${fullName}!`,
     `<p>You have been marked as a graduate. Your account has been converted to an alumni account.</p>

@@ -82,7 +82,7 @@ export function LandingTestimonials() {
             Placed. Growing. Inspiring others.
           </h2>
           <p className="text-center mt-5 opacity-75">
-            Real words from Vishwaniketan students who built their careers
+            Real words from Pillai University students who built their careers
             through this portal.
           </p>
         </motion.div>

@@ -28,7 +28,7 @@ export function LandingCTA() {
               Ready to get placed?
             </h2>
             <p className="mb-8 text-lg text-primary-foreground/75 md:text-xl">
-              Join hundreds of Vishwaniketan students who&apos;ve already launched
+              Join hundreds of Pillai University students who&apos;ve already launched
               their careers through the TPO portal.
             </p>
             <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">

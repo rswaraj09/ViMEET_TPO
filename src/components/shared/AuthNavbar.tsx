@@ -27,10 +27,10 @@ export function AuthNavbar({
     >
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5">
-          <img src="/logo.png" alt="Vishwaniketan" className="h-8 w-8" />
+          <img src="/logopillai.png" alt="Pillai University" className="h-8 w-8" />
           <div className="flex flex-col leading-tight">
             <span className="text-sm font-semibold tracking-tight text-neutral-900">
-              Vishwaniketan
+              Pillai University
             </span>
             <span className="text-[10px] font-medium uppercase tracking-wider text-neutral-500">
               TPO Portal
