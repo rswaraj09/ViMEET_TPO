@@ -53,7 +53,7 @@ export async function GET(
       isVerified: true,
     };
     if (test.department) where.department = test.department;
-    if (test.eligibleYears.length > 0) {
+    if ((test.eligibleYears ?? []).length > 0) {
       where.academicYear = { in: test.eligibleYears };
     }
 

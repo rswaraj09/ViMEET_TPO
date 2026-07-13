@@ -44,7 +44,7 @@ const emptyForm: FormState = {
 const toForm = (p: Project): FormState => ({
   title: p.title,
   description: p.description ?? "",
-  techStackRaw: p.techStack.join(", "),
+  techStackRaw: (p.techStack ?? []).join(", "),
   projectUrl: p.projectUrl ?? "",
   repoUrl: p.repoUrl ?? "",
 });
@@ -296,7 +296,7 @@ export function Projects() {
                         {p.description}
                       </p>
                     )}
-                    {p.techStack.length > 0 && (
+                    {p.techStack && p.techStack.length > 0 && (
                       <div className="mt-3 flex flex-wrap gap-1.5">
                         {p.techStack.map((t) => (
                           <span

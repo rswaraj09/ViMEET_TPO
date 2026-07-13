@@ -458,7 +458,7 @@ function TakeTest({
         </p>
       </div>
 
-      {test.rules.length > 0 && (
+      {test.rules && test.rules.length > 0 && (
         <div className="rounded-md border border-neutral-200 bg-white p-4 text-sm">
           <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-neutral-500">Rules</p>
           <ul className="list-disc space-y-1 pl-5 text-neutral-700">

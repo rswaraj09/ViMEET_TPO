@@ -274,6 +274,9 @@ function JobDetailDrawer({
   onApply: () => void;
   applying: boolean;
 }) {
+  const eligibleYears = job.eligibleYears ?? [];
+  const eligibleDepartments = job.eligibleDepartments ?? [];
+  const rounds = job.rounds ?? [];
   return (
     <div
       className="fixed inset-0 z-50 flex justify-end bg-black/50"
@@ -321,16 +324,16 @@ function JobDetailDrawer({
             )}
             <DetailRow
               label="Eligible years"
-              value={job.eligibleYears
+              value={eligibleYears
                 .map((y) => y.replace("_", " "))
                 .join(", ")}
             />
             <DetailRow
               label="Eligible departments"
-              value={job.eligibleDepartments.join(", ")}
+              value={eligibleDepartments.join(", ")}
             />
-            {job.rounds.length > 0 && (
-              <DetailRow label="Rounds" value={job.rounds.join(" → ")} />
+            {rounds.length > 0 && (
+              <DetailRow label="Rounds" value={rounds.join(" → ")} />
             )}
             {job.bondDetails && (
               <DetailRow label="Bond" value={job.bondDetails} />

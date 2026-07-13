@@ -287,8 +287,8 @@ export function AlumniDirectoryView() {
           {items.map((a) => {
             const profile = a.alumniProfile;
             const isHigherStudies = !!profile?.higherStudies && !profile?.currentOrg;
-            const visibleSkills = a.skills.slice(0, 3);
-            const extraSkills = a.skills.length - visibleSkills.length;
+            const visibleSkills = (a.skills ?? []).slice(0, 3);
+            const extraSkills = (a.skills?.length ?? 0) - visibleSkills.length;
             return (
               <Card key={a.id} className="transition hover:border-neutral-300">
                 <CardContent className="p-4">

@@ -1353,7 +1353,7 @@ function AcademicHistoryTab() {
                   <span>· CGPA <strong>{user.avgCgpa.toFixed(2)}</strong></span>
                 )}
               </div>
-              {user.skills.length > 0 && (
+              {user.skills && user.skills.length > 0 && (
                 <div className="mt-2 flex flex-wrap gap-1">
                   {user.skills.map((s) => (
                     <span key={s} className="rounded bg-neutral-100 px-2 py-0.5 text-[11px] text-neutral-700">{s}</span>
@@ -1533,7 +1533,7 @@ function AcademicHistoryTab() {
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                     <div className="min-w-0 flex-1">
                       <p className="text-sm font-semibold text-neutral-900">{proj.title}</p>
-                      {proj.techStack.length > 0 && (
+                      {proj.techStack && proj.techStack.length > 0 && (
                         <div className="mt-1 flex flex-wrap gap-1">
                           {proj.techStack.map((t) => (
                             <span key={t} className="rounded bg-neutral-200 px-1.5 py-0.5 text-[10px] text-neutral-700">{t}</span>

@@ -22,16 +22,19 @@ export async function GET(
       return NextResponse.json({ message: "Job not found" }, { status: 404 });
     }
 
+    const eligibleDepartments = job.eligibleDepartments ?? [];
+    const eligibleYears = job.eligibleYears ?? [];
+
     const eligible =
-      job.eligibleDepartments.length === 0 ||
-      (user.department != null && job.eligibleDepartments.includes(user.department as never)) ||
-      job.eligibleYears.length === 0 ||
+      eligibleDepartments.length === 0 ||
+      (user.department != null && eligibleDepartments.includes(user.department as never)) ||
+      eligibleYears.length === 0 ||
       (job.minCgpa == null);
 
     // Full eligibility check
     const departmentOk =
-      job.eligibleDepartments.length === 0 ||
-      (user.department != null && job.eligibleDepartments.includes(user.department as never));
+      eligibleDepartments.length === 0 ||
+      (user.department != null && eligibleDepartments.includes(user.department as never));
 
     const userRecord = await prisma.user.findUnique({
       where: { id: user.id },
@@ -39,8 +42,8 @@ export async function GET(
     });
 
     const yearOk =
-      job.eligibleYears.length === 0 ||
-      (userRecord?.academicYear != null && job.eligibleYears.includes(userRecord.academicYear));
+      eligibleYears.length === 0 ||
+      (userRecord?.academicYear != null && eligibleYears.includes(userRecord.academicYear));
 
     const cgpaOk =
       job.minCgpa == null ||

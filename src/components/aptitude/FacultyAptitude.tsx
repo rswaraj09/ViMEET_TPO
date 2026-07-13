@@ -234,9 +234,9 @@ function TestsList({
                     </span>
                     <span>
                       Years:{" "}
-                      {t.eligibleYears.length === 0
+                      {(t.eligibleYears ?? []).length === 0
                         ? "All"
-                        : t.eligibleYears.map((y) => YEAR_LABELS[y as AcademicYear]).join(", ")}
+                        : (t.eligibleYears ?? []).map((y) => YEAR_LABELS[y as AcademicYear]).join(", ")}
                     </span>
                     <span>{t._count.submissions} submissions</span>
                   </div>
@@ -378,7 +378,7 @@ function AptitudeEditor({
         setState({
           title: t.title,
           description: t.description,
-          rules: t.rules,
+          rules: t.rules ?? [],
           totalTime: t.totalTime,
           minimumMarks: t.minimumMarks,
           allowedAttempts: t.allowedAttempts,
@@ -386,7 +386,7 @@ function AptitudeEditor({
           category: t.category,
           isHomework: t.isHomework,
           department: t.department,
-          eligibleYears: t.eligibleYears,
+          eligibleYears: t.eligibleYears ?? [],
           sections: (t.sections ?? []).map((s) => ({
             id: s.id,
             name: s.name,
@@ -405,7 +405,7 @@ function AptitudeEditor({
             marks: q.marks,
           })),
         });
-        setRulesText(t.rules.join("\n"));
+        setRulesText((t.rules ?? []).join("\n"));
       } catch (e) {
         toast.error(extractErrorMessage(e));
         onCancel();

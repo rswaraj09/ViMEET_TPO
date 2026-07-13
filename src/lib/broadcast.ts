@@ -69,13 +69,15 @@ const processBroadcast = async (jobId: string): Promise<void> => {
     data: { status: "PROCESSING", startedAt: new Date(), attempts: { increment: 1 } },
   });
 
+  const recipientIds = job.recipientIds ?? [];
+
   const recipients = await prisma.user.findMany({
-    where: { id: { in: job.recipientIds } },
+    where: { id: { in: recipientIds } },
     select: { id: true, emailId: true, fullName: true },
   });
 
   const emailMap = new Map(recipients.map((r) => [r.id, r]));
-  const chunks = chunk(job.recipientIds, BATCH_SIZE);
+  const chunks = chunk(recipientIds, BATCH_SIZE);
 
   let sentCount = 0;
   let failedCount = 0;

@@ -72,11 +72,11 @@ function jobToForm(job: Job): typeof emptyJobForm {
     location: job.location,
     locationType: job.locationType,
     jobType: job.jobType,
-    eligibleDepartments: [...job.eligibleDepartments] as string[],
-    eligibleYears: [...job.eligibleYears] as string[],
+    eligibleDepartments: [...(job.eligibleDepartments ?? [])] as string[],
+    eligibleYears: [...(job.eligibleYears ?? [])] as string[],
     minCgpa: job.minCgpa != null ? String(job.minCgpa) : "",
     deadline: deadlineLocal,
-    rounds: job.rounds.join(", "),
+    rounds: (job.rounds ?? []).join(", "),
   };
 }
 

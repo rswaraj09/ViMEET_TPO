@@ -182,9 +182,9 @@ export function AdminAptitudeResults() {
               <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-xs text-neutral-500">
                 <span>Dept: {detail.test.department ? departmentLabel(detail.test.department) : "All"}</span>
                 <span>
-                  Years: {detail.test.eligibleYears.length === 0
+                  Years: {(detail.test.eligibleYears ?? []).length === 0
                     ? "All"
-                    : detail.test.eligibleYears.map((y) => YEAR_LABELS[y]).join(", ")}
+                    : (detail.test.eligibleYears ?? []).map((y) => YEAR_LABELS[y]).join(", ")}
                 </span>
                 <span>Total marks: {detail.test.totalMarks}</span>
                 <span>Min marks: {detail.test.minimumMarks}</span>
@@ -345,9 +345,9 @@ export function AdminAptitudeResults() {
                     <span>Dept: {t.department ? departmentLabel(t.department) : "All"}</span>
                     <span>
                       Years:{" "}
-                      {t.eligibleYears.length === 0
+                      {(t.eligibleYears ?? []).length === 0
                         ? "All"
-                        : t.eligibleYears.map((y) => YEAR_LABELS[y]).join(", ")}
+                        : (t.eligibleYears ?? []).map((y) => YEAR_LABELS[y]).join(", ")}
                     </span>
                     <span>{t._count.submissions} submissions</span>
                     <span>{t.totalMarks} marks</span>

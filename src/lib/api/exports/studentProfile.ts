@@ -162,7 +162,7 @@ export function exportStudentProfileToPdf(data: StudentDetailResponse): void {
       head: [["Title", "Tech", "Status", "Links"]],
       body: projects.map((p) => [
         p.title,
-        p.techStack.join(", "),
+        (p.techStack ?? []).join(", "),
         p.isVerified ? "Verified" : "Pending",
         [p.projectUrl, p.repoUrl].filter(Boolean).join("\n") || "—",
       ]),

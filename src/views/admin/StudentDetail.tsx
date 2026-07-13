@@ -477,7 +477,7 @@ export function StudentDetail() {
                       </span>
                     )}
                   </div>
-                  {p.techStack.length > 0 && (
+                  {p.techStack && p.techStack.length > 0 && (
                     <div className="mt-2.5 flex flex-wrap gap-1">
                       {p.techStack.map((t) => (
                         <span

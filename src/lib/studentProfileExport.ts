@@ -270,7 +270,7 @@ export function exportStudentProfileToPdf(data: StudentDetailResponse) {
       checkPageBreak(25);
 
       const rows: [string, string][] = [["Title", p.title]];
-      if (p.techStack.length > 0)
+      if (p.techStack && p.techStack.length > 0)
         rows.push(["Tech stack", p.techStack.join(", ")]);
       if (p.description) rows.push(["Description", p.description]);
       if (p.projectUrl) rows.push(["Live URL", p.projectUrl]);
