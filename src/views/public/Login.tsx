@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { Suspense } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Briefcase, GraduationCap, ShieldCheck } from "lucide-react";
 import { LoginForm } from "@/components/login-form";
@@ -21,13 +22,15 @@ export function Login() {
           </Link>
           <div className="mt-16">
             <div className="flex items-center gap-3">
-              <img
-                src="/logopillai.png"
-                alt="Pillai University"
+              <Image
+                src="/logo.png"
+                alt="Vishwaniketan iMEET"
+                width={48}
+                height={48}
                 className="h-12 w-12 rounded-md bg-white p-1"
               />
               <div>
-                <p className="font-semibold">Pillai University</p>
+                <p className="font-semibold">Vishwaniketan iMEET</p>
                 <p className="text-xs text-neutral-400">TPO Portal</p>
               </div>
             </div>
@@ -76,7 +79,7 @@ export function Login() {
         </div>
 
         <footer className="px-6 py-4 text-center text-xs text-neutral-400 border-t border-neutral-100">
-          © {new Date().getFullYear()} Pillai University · TPO Portal
+          © {new Date().getFullYear()} Vishwaniketan iMEET · TPO Portal
         </footer>
       </main>
     </div>

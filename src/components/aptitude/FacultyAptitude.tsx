@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import {
   Brain,
@@ -717,7 +717,7 @@ function AptitudeEditor({
         </div>
         {state.sections.length === 0 ? (
           <p className="mt-3 text-xs text-neutral-500">
-            No sections — all questions will be in a single unlabelled group. Add sections to organise questions (e.g. "Section A: Verbal", "Section B: Quant").
+            No sections — all questions will be in a single unlabelled group. Add sections to organise questions (e.g. &ldquo;Section A: Verbal&rdquo;, &ldquo;Section B: Quant&rdquo;).
           </p>
         ) : (
           <ol className="mt-3 space-y-2">
@@ -929,17 +929,17 @@ function SubmissionsView({
   } | null>(null);
   const [reviewing, setReviewing] = useState<SubmissionRecord | null>(null);
 
-  const load = async () => {
+  const load = useCallback(async () => {
     try {
       setData(await listTestSubmissions(testId));
     } catch (e) {
       toast.error(extractErrorMessage(e));
     }
-  };
+  }, [testId]);
 
   useEffect(() => {
     load();
-  }, [testId]);
+  }, [load]);
 
   return (
     <div className="space-y-4">

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import { toast } from "sonner";
 import {
@@ -170,9 +171,11 @@ export function StudentDetail() {
         <section className="rounded-xl border border-neutral-200 bg-white p-4 sm:rounded-2xl sm:p-6">
           <div className="flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:gap-5">
             {user.profilePic ? (
-              <img
+              <Image
                 src={user.profilePic}
                 alt={user.fullName}
+                width={80}
+                height={80}
                 className="h-16 w-16 rounded-full object-cover ring-1 ring-neutral-200 sm:h-20 sm:w-20"
               />
             ) : (
@@ -263,9 +266,9 @@ export function StudentDetail() {
                     <ExternalLink className="h-3 w-3" />
                   </a>
                 )}
-                {(user as any).portfolioUrl && (
+                {user.portfolioUrl && (
                   <a
-                    href={(user as any).portfolioUrl}
+                    href={user.portfolioUrl}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex min-w-0 items-center gap-1.5 rounded-md border border-neutral-200 px-3 py-1.5 font-medium text-neutral-700 hover:border-neutral-900 hover:text-neutral-900"

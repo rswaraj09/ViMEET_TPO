@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useCallback, useEffect, useState } from "react";
+import Image from "next/image";
 import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -48,9 +49,11 @@ export function AlumniPostCard({ post }: { post: AlumniPost }) {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex min-w-0 items-start gap-3">
             {post.alumni.profilePic ? (
-              <img
+              <Image
                 src={post.alumni.profilePic}
                 alt=""
+                width={40}
+                height={40}
                 className="h-10 w-10 rounded-full object-cover"
               />
             ) : (
@@ -295,9 +298,11 @@ export function AlumniDirectoryView() {
                   {/* Header */}
                   <div className="flex items-start gap-3">
                     {a.profilePic ? (
-                      <img
+                      <Image
                         src={a.profilePic}
                         alt=""
+                        width={48}
+                        height={48}
                         className="h-12 w-12 flex-shrink-0 rounded-full object-cover"
                       />
                     ) : (

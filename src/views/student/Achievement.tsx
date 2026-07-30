@@ -345,7 +345,7 @@ export function Achievement() {
               No achievements yet
             </h3>
             <p className="mt-1 text-sm text-neutral-500">
-              Click "Add achievement" to create your first entry.
+              Click &ldquo;Add achievement&rdquo; to create your first entry.
             </p>
           </div>
         ) : (

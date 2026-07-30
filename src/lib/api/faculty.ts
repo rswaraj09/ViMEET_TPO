@@ -1,5 +1,10 @@
 import { api } from "./base";
-import type { Department, AcademicYear, FieldDiff } from "./student";
+import type {
+  Department,
+  AcademicYear,
+  FieldDiff,
+  Certificate,
+} from "./student";
 
 export type VerificationEntityType = "PROFILE" | "MARKS" | "INTERNSHIP" | "ACHIEVEMENT" | "CERTIFICATE";
 export type VerificationStatus = "PENDING" | "APPROVED" | "REJECTED";
@@ -131,6 +136,7 @@ export interface DeptStudentDetail {
     parentsContactNo: string | null;
     skills: string[];
     socialProfile: string | null;
+    portfolioUrl: string | null;
     alumniProfile: {
       currentOrg: string | null;
       currentRole: string | null;
@@ -142,7 +148,7 @@ export interface DeptStudentDetail {
   marks: Record<string, unknown> | null;
   internships: Array<Record<string, unknown>>;
   achievements: Array<Record<string, unknown>>;
-  certificates: Array<Record<string, unknown>>;
+  certificates: Certificate[];
   pendingVerifications: Array<Record<string, unknown>>;
 }
 

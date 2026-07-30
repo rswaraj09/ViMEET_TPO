@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import Image from "next/image";
 import { StudentSidebar } from "./StudentSidebar";
 import { NotificationBell } from "./NotificationBell";
 import { useAuth } from "@/context/AuthContext";
@@ -40,9 +41,11 @@ export function StudentLayout({
             {user && (
               <div className="hidden items-center gap-2 border-l border-neutral-200 pl-4 sm:flex">
                 {user.profilePic ? (
-                  <img
+                  <Image
                     src={user.profilePic}
                     alt=""
+                    width={32}
+                    height={32}
                     className="h-8 w-8 rounded-full object-cover"
                   />
                 ) : (

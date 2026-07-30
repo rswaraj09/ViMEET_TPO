@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useEffect, useState, useCallback } from "react";
+import Image from "next/image";
 import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
@@ -842,7 +843,7 @@ function PostsTab() {
       ) : posts.length === 0 ? (
         <Card>
           <CardContent className="p-6 text-sm text-neutral-500">
-            You haven't posted anything yet.
+            You haven&rsquo;t posted anything yet.
           </CardContent>
         </Card>
       ) : (
@@ -869,9 +870,11 @@ function PostCard({
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex min-w-0 items-start gap-3">
             {post.alumni.profilePic ? (
-              <img
+              <Image
                 src={post.alumni.profilePic}
                 alt=""
+                width={40}
+                height={40}
                 className="h-10 w-10 rounded-full object-cover"
               />
             ) : (
@@ -1335,7 +1338,13 @@ function AcademicHistoryTab() {
         <CardContent className="p-5">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
             {user.profilePic ? (
-              <img src={user.profilePic} alt="" className="h-16 w-16 rounded-full object-cover flex-shrink-0" />
+              <Image
+                src={user.profilePic}
+                alt=""
+                width={64}
+                height={64}
+                className="h-16 w-16 rounded-full object-cover flex-shrink-0"
+              />
             ) : (
               <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full bg-neutral-200 text-lg font-semibold text-neutral-700">
                 {user.fullName.slice(0, 2).toUpperCase()}

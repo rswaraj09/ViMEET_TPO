@@ -60,7 +60,7 @@ export function StudentApplications() {
               No applications yet
             </h3>
             <p className="mt-1 text-sm text-neutral-500">
-              Head over to Jobs to find opportunities you're eligible for.
+              Head over to Jobs to find opportunities you&rsquo;re eligible for.
             </p>
           </div>
         ) : (

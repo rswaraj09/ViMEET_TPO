@@ -317,7 +317,7 @@ export function exportStudentProfileToPdf(data: StudentDetailResponse) {
     doc.setFont("helvetica", "normal");
     doc.setTextColor(160, 160, 160);
     doc.text(
-      `Pillai University TPO Portal  ·  Generated ${new Date().toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}`,
+      `Vishwaniketan TPO Portal  ·  Generated ${new Date().toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}`,
       14,
       291
     );

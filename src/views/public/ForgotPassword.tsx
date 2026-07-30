@@ -85,7 +85,7 @@ export function ForgotPassword() {
                       <input
                         id="emailId"
                         type="email"
-                        placeholder="yourname@pillai.edu.in"
+                        placeholder="yourname@vishwaniketan.edu.in"
                         value={emailId}
                         onChange={(e) => setEmailId(e.target.value)}
                         required
@@ -129,7 +129,7 @@ export function ForgotPassword() {
       </main>
 
       <footer className="px-6 py-4 text-center text-xs text-neutral-400 border-t border-neutral-100">
-        © {new Date().getFullYear()} Pillai University · TPO Portal
+        © {new Date().getFullYear()} Vishwaniketan iMEET · TPO Portal
       </footer>
     </div>
   );

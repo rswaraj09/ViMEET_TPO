@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { extractErrorMessage } from "@/lib/api/base";
@@ -851,9 +852,11 @@ function StudentStub({
   return (
     <div className="flex min-w-0 flex-1 items-center gap-2">
       {student.profilePic ? (
-        <img
+        <Image
           src={student.profilePic}
           alt=""
+          width={32}
+          height={32}
           className="h-8 w-8 rounded-full object-cover flex-shrink-0"
         />
       ) : (

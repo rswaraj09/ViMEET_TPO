@@ -39,6 +39,26 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* ------------------------------------------------------------------ */
+  /* Landing design system — editorial neutral palette, single accent     */
+  /* ------------------------------------------------------------------ */
+  --font-archivo: var(--ff-archivo);
+  --font-editorial: var(--ff-editorial);
+
+  --color-paper: #ffffff;
+  --color-ink: #111111;
+  --color-ink-soft: #1a1a1a;
+  --color-ash: #5f5f5f;
+  --color-ash-light: #8a8a8a;
+  --color-surface: #f5f5f5;
+  --color-surface-2: #efefef;
+  --color-line: #e4e4e4;
+  --color-line-strong: #cfcfcf;
+  --color-pine: #14503c;
+  --color-pine-deep: #0e3a2b;
+  --color-pine-tint: #eff4f1;
+  --color-pine-line: #d2e0d8;
 }
 
 :root {
@@ -131,4 +151,58 @@
 
 .animate-marquee:hover {
   animation-play-state: paused;
+}
+
+/* -------------------------------------------------------------------- */
+/* Landing page primitives                                               */
+/* -------------------------------------------------------------------- */
+
+/* Editorial shell: 12-column grid with generous gutters. */
+.editorial-shell {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .editorial-shell { padding-inline: 2.5rem; }
+}
+
+@media (min-width: 1280px) {
+  .editorial-shell { padding-inline: 4.5rem; }
+}
+
+/* Tabular, tightly-set numerals for statistics. */
+.numerals {
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  letter-spacing: -0.04em;
+}
+
+/* Hairline grid: a single 1px lattice instead of per-card borders. */
+.hairline-grid {
+  display: grid;
+  gap: 1px;
+  background-color: #e4e4e4;
+  border: 1px solid #e4e4e4;
+  overflow: hidden;
+}
+
+/* Underline that draws in from the left on hover. */
+.rule-in {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rule-in:hover,
+.rule-in:focus-visible {
+  background-size: 100% 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rule-in { transition: none; }
 }

@@ -5,51 +5,9 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import {
-  Eye,
-  EyeOff,
-  Loader2,
-  LogIn,
-  Mail,
-  Lock,
-  ShieldCheck,
-  GraduationCap,
-  User,
-  Users,
-} from "lucide-react";
+import { Eye, EyeOff, Loader2, LogIn, Mail, Lock } from "lucide-react";
 import { api, extractErrorMessage } from "@/lib/api/base";
 import { useAuth, roleLandingPath } from "@/context/AuthContext";
-
-const DEMO_ACCOUNTS = [
-  {
-    role: "Admin",
-    emailId: process.env.NEXT_PUBLIC_DEMO_ADMIN_EMAIL || "admin@pillai.edu.in",
-    password: process.env.NEXT_PUBLIC_DEMO_ADMIN_PASSWORD || "Admin@12345",
-    icon: ShieldCheck,
-  },
-  {
-    role: "Faculty",
-    emailId: process.env.NEXT_PUBLIC_DEMO_FACULTY_EMAIL || "faculty@pillai.edu.in",
-    password: process.env.NEXT_PUBLIC_DEMO_FACULTY_PASSWORD || "Faculty@12345",
-    icon: GraduationCap,
-  },
-  {
-    role: "Student",
-    emailId: process.env.NEXT_PUBLIC_DEMO_STUDENT_EMAIL || "student@pillai.edu.in",
-    password: process.env.NEXT_PUBLIC_DEMO_STUDENT_PASSWORD || "Student@12345",
-    icon: User,
-  },
-  {
-    role: "Alumni",
-    emailId: process.env.NEXT_PUBLIC_DEMO_ALUMNI_EMAIL || "alumni@pillai.edu.in",
-    password: process.env.NEXT_PUBLIC_DEMO_ALUMNI_PASSWORD || "Alumni@12345",
-    icon: Users,
-  },
-] as const;
-
-// Seeded via `npm run db:seed`. Hide on real production deploys by setting
-// NEXT_PUBLIC_SHOW_DEMO_LOGINS=false in the environment.
-const SHOW_DEMO_LOGINS = process.env.NEXT_PUBLIC_SHOW_DEMO_LOGINS !== "false";
 
 export function LoginForm({
   className,
@@ -85,11 +43,6 @@ export function LoginForm({
     setFormData((f) => ({ ...f, [id]: value }));
   };
 
-  const fillDemoAccount = (account: (typeof DEMO_ACCOUNTS)[number]) => {
-    setFormData({ emailId: account.emailId, password: account.password });
-    toast.success(`Filled ${account.role} test credentials`);
-  };
-
   return (
     <div className={cn("w-full", className)} {...props}>
       <div className="mb-8">
@@ -100,27 +53,6 @@ export function LoginForm({
           Sign in to continue to your TPO portal.
         </p>
       </div>
-
-      {SHOW_DEMO_LOGINS && (
-        <div className="mb-6 rounded-lg border border-neutral-200 bg-neutral-50 p-3">
-          <p className="mb-2 text-xs font-medium uppercase tracking-wide text-neutral-500">
-            Quick demo login — click a role to autofill
-          </p>
-          <div className="grid grid-cols-2 gap-2">
-            {DEMO_ACCOUNTS.map((account) => (
-              <button
-                key={account.role}
-                type="button"
-                onClick={() => fillDemoAccount(account)}
-                className="flex items-center gap-2 rounded-md border border-neutral-200 bg-white px-2.5 py-2 text-left text-xs transition hover:border-neutral-900 hover:bg-neutral-900 hover:text-white"
-              >
-                <account.icon className="h-3.5 w-3.5 flex-shrink-0" />
-                <span className="font-medium">{account.role}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div className="space-y-1.5">

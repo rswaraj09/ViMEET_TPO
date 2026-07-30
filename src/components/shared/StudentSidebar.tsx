@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -74,15 +75,17 @@ export function StudentSidebar() {
           collapsed ? "justify-center px-2" : "px-4"
         }`}
       >
-        <img
-          src="/logopillai.png"
-          alt="Pillai University"
+        <Image
+          src="/logo.png"
+          alt="Vishwaniketan iMEET"
+          width={32}
+          height={32}
           className="h-8 w-8 flex-shrink-0"
         />
         {!collapsed && (
           <div className="flex flex-col leading-tight text-left">
             <span className="text-sm font-semibold tracking-tight text-neutral-900">
-              Pillai University
+              Vishwaniketan iMEET
             </span>
             <span className="text-[10px] font-medium uppercase tracking-wider text-neutral-500">
               Student Portal
@@ -127,9 +130,11 @@ export function StudentSidebar() {
         {!collapsed && user && (
           <div className="mb-2 flex items-center gap-2.5 rounded-md border border-neutral-200 bg-neutral-50 px-3 py-2">
             {user.profilePic ? (
-              <img
+              <Image
                 src={user.profilePic}
                 alt=""
+                width={32}
+                height={32}
                 className="h-8 w-8 flex-shrink-0 rounded-full object-cover"
               />
             ) : (

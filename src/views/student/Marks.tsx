@@ -30,10 +30,12 @@ type ScoreKey =
   | "sem7"
   | "sem8";
 
+type UrlKey = Extract<keyof Marks, `${string}MarksheetUrl`>;
+
 interface Row {
   label: string;
   scoreKey: ScoreKey;
-  urlKey: string;
+  urlKey: UrlKey;
   unit: string;
   max: number;
 }
@@ -232,7 +234,7 @@ export function Marks() {
                     key={r.scoreKey}
                     row={r}
                     value={scores[r.scoreKey] ?? ""}
-                    currentUrl={(marks as any)[r.urlKey]}
+                    currentUrl={marks[r.urlKey]}
                     onChange={(v) => setScore(r.scoreKey, v)}
                     onUpload={(file) => handleUpload(r, file)}
                   />

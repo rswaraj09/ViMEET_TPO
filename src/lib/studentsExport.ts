@@ -32,7 +32,9 @@ function buildRows(items: StudentListItem[]) {
   }));
 }
 
-export function exportStudentsToExcel(items: StudentListItem[], summary: string) {
+// `_summary` is accepted for symmetry with exportStudentsToPdf (and both call
+// sites) but is not written into the workbook.
+export function exportStudentsToExcel(items: StudentListItem[], _summary: string) {
   const rows = buildRows(items);
   const ws = XLSX.utils.json_to_sheet(rows);
   const wb = XLSX.utils.book_new();

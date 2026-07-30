@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState, useCallback, useEffect } from "react";
+import Image from "next/image";
 import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -407,9 +408,11 @@ function JobApplicantsView({
               <CardContent className="p-4 flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
                   {a.student.profilePic ? (
-                    <img
+                    <Image
                       src={a.student.profilePic}
                       alt=""
+                      width={40}
+                      height={40}
                       className="w-10 h-10 rounded-full object-cover"
                     />
                   ) : (

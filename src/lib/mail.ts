@@ -19,7 +19,7 @@ export const sendMail = async ({ to, subject, html }: SendMailArgs): Promise<boo
     resend = new Resend(process.env.RESEND_API_KEY);
   }
 
-  const fromEmail = process.env.RESEND_FROM_EMAIL || "TPO Pillai University <noreply@example.com>";
+  const fromEmail = process.env.RESEND_FROM_EMAIL || "Vishwaniketan TPO <noreply@example.com>";
 
   try {
     const { data, error } = await resend.emails.send({

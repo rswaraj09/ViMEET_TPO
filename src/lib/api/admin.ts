@@ -106,6 +106,7 @@ export interface StudentDetailResponse {
     parentsContactNo: string | null;
     skills: string[];
     socialProfile: string | null;
+    portfolioUrl: string | null;
     onInternshipUntil: string | null;
   };
   marks: Record<string, unknown> | null;

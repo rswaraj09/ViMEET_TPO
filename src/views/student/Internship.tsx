@@ -383,7 +383,7 @@ export function Internship() {
               No internships yet
             </h3>
             <p className="mt-1 text-sm text-neutral-500">
-              Click "Add internship" to create your first entry.
+              Click &ldquo;Add internship&rdquo; to create your first entry.
             </p>
           </div>
         ) : (

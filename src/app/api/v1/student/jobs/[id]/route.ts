@@ -25,12 +25,6 @@ export async function GET(
     const eligibleDepartments = job.eligibleDepartments ?? [];
     const eligibleYears = job.eligibleYears ?? [];
 
-    const eligible =
-      eligibleDepartments.length === 0 ||
-      (user.department != null && eligibleDepartments.includes(user.department as never)) ||
-      eligibleYears.length === 0 ||
-      (job.minCgpa == null);
-
     // Full eligibility check
     const departmentOk =
       eligibleDepartments.length === 0 ||

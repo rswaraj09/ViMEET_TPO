@@ -1,6 +1,6 @@
-# Pillai University TPO Portal
+# Vishwaniketan TPO Portal
 
-Role-based Training & Placement Office portal for Pillai University — Students, Alumni, Faculty, HODs, and Admins, with a faculty verification workflow for all student data.
+Role-based Training & Placement Office portal for Vishwaniketan iMEET — Students, Alumni, Faculty, HODs, and Admins, with a faculty verification workflow for all student data.
 
 ## Tech Stack
 
@@ -40,7 +40,6 @@ NEXT_PUBLIC_APP_URL="http://localhost:3000"
 ```bash
 npx prisma generate
 npx prisma db push
-npm run db:seed
 ```
 
 ## Running
@@ -59,18 +58,18 @@ npm run dev
 | **Admin** | `/admin` | Approve registrations, manage students/faculty, post jobs/events |
 | **Alumni** | `/alumni` | Edit alumni profile, post referrals/mentorships |
 
-## Test Accounts
+## Creating Accounts
 
-`npm run db:seed` (`prisma/seed.ts`) creates one verified, active account per role, plus sample marks/internships/jobs/events/notifications/etc. so every table has data to browse. The login page shows a "Quick demo login" panel that autofills these — set `NEXT_PUBLIC_SHOW_DEMO_LOGINS=false` to hide it on a real production deploy.
+There is no seed script — every account is created through the app itself, and no credentials are surfaced in the UI.
 
-| Role | Email | Password |
-|------|-------|----------|
-| Admin | `admin@pillai.edu.in` | `Admin@12345` |
-| Faculty | `faculty@pillai.edu.in` | `Faculty@12345` |
-| Student | `student@pillai.edu.in` | `Student@12345` |
-| Alumni | `alumni@pillai.edu.in` | `Alumni@12345` |
+| Role | Created by |
+|------|-----------|
+| **Student** | Self-registration at `/signup`, then admin approval before sign-in |
+| **Faculty** / **HOD** | An admin adds them from the admin dashboard; a temporary password is emailed to them |
+| **Alumni** | Converted automatically from a student account when the student is marked as graduated |
+| **Admin** | No in-app path — see below |
 
-Override any of these via env vars (see `ADMIN_EMAIL`/`ADMIN_PASSWORD`, `FACULTY_EMAIL`/`FACULTY_PASSWORD`, `STUDENT_EMAIL`/`STUDENT_PASSWORD`, `ALUMNI_EMAIL`/`ALUMNI_PASSWORD` in `prisma/seed.ts`) — remember to update the matching `NEXT_PUBLIC_DEMO_*` vars so the login page panel stays in sync.
+**First admin.** Since nothing in the app creates an `ADMIN`, bootstrap one directly against the database with `npx prisma studio`: add a `User` row with `role = "ADMIN"`, `isVerified = true`, `isActive = true`, and a bcrypt hash (cost 10) as the `password`. Every other account can then be created from the admin dashboard.
 
 ## Verification Model
 
@@ -101,7 +100,7 @@ Uploads handled securely through Cloudinary, **2 MB max** (client + server enfor
 
 ---
 
-Built for the Training & Placement Cell of Pillai University.
+Built for the Training & Placement Cell of Vishwaniketan iMEET.
 
 ## To-Do List
 - implement the proctored test module where camera open is required

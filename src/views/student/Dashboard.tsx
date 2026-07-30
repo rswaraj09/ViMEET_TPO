@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { toast } from "sonner";
 import {
   Camera,
@@ -205,9 +206,11 @@ export function StudentDashboard() {
             <div className="flex flex-wrap items-center gap-5">
               <div className="relative">
                 {profile.profilePic ? (
-                  <img
+                  <Image
                     src={profile.profilePic}
                     alt=""
+                    width={80}
+                    height={80}
                     className="h-20 w-20 rounded-full object-cover ring-1 ring-neutral-200"
                   />
                 ) : (

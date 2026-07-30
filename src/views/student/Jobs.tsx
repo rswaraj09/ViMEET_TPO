@@ -383,7 +383,7 @@ function JobDetailDrawer({
             </button>
           ) : (
             <div className="rounded-md bg-amber-50 px-4 py-2.5 text-center text-sm font-medium text-amber-800 ring-1 ring-amber-200">
-              You don't meet the eligibility criteria
+              You don&rsquo;t meet the eligibility criteria
               {job.ineligibleReasons.length > 0 &&
                 ` (${job.ineligibleReasons
                   .map((r) => REASON_LABEL[r])

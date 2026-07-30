@@ -273,7 +273,7 @@ export function Projects() {
               No projects yet
             </h3>
             <p className="mt-1 text-sm text-neutral-500">
-              Click "Add project" to showcase your work.
+              Click &ldquo;Add project&rdquo; to showcase your work.
             </p>
           </div>
         ) : (

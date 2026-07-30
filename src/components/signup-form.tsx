@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState } from "react";
+import axios from "axios";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -82,9 +83,12 @@ export function SignupForm() {
       const { data } = await api.post("/auth/signup", formData);
       toast.success(data.message || "Account created. Wait for approval.");
       setTimeout(() => router.push("/login"), 1200);
-    } catch (error: any) {
-      const errs = error?.response?.data?.errors;
-      if (errs) setFieldErrors(errs);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errs: Record<string, string[]> | undefined =
+          error.response?.data?.errors;
+        if (errs) setFieldErrors(errs);
+      }
       toast.error(extractErrorMessage(error));
     } finally {
       setLoading(false);
@@ -102,7 +106,7 @@ export function SignupForm() {
           Create your account
         </h1>
         <p className="mt-2 text-sm text-neutral-500">
-          Join the Pillai University TPO portal in a few steps.
+          Join the Vishwaniketan TPO portal in a few steps.
         </p>
       </div>
 

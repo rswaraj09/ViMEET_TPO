@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
+import Image from "next/image";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -46,9 +47,11 @@ function Avatar({
   const dim = size === "sm" ? "h-7 w-7 text-[10px]" : "h-9 w-9 text-xs";
   if (src) {
     return (
-      <img
+      <Image
         src={src}
         alt={name}
+        width={36}
+        height={36}
         className={`${dim} flex-shrink-0 rounded-full object-cover ring-1 ring-neutral-200`}
       />
     );

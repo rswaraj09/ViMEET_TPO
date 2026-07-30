@@ -2,6 +2,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import {
@@ -141,9 +142,11 @@ export function FacultyDashboard() {
             {user && <NotificationBell />}
             <div className="hidden items-center gap-2 sm:flex">
               {user?.profilePic ? (
-                <img
+                <Image
                   src={user.profilePic}
                   alt=""
+                  width={32}
+                  height={32}
                   className="h-8 w-8 rounded-full object-cover"
                 />
               ) : (
@@ -1100,7 +1103,13 @@ function AlumniTab() {
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
                         {a.profilePic ? (
-                          <img src={a.profilePic} alt="" className="h-7 w-7 flex-shrink-0 rounded-full object-cover" />
+                          <Image
+                            src={a.profilePic}
+                            alt=""
+                            width={28}
+                            height={28}
+                            className="h-7 w-7 flex-shrink-0 rounded-full object-cover"
+                          />
                         ) : (
                           <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-neutral-900 text-[10px] font-bold text-white">
                             {a.fullName.slice(0, 2).toUpperCase()}

@@ -174,7 +174,6 @@ export function StatisticsTab() {
         const ratio = canvas.width / canvas.height;
         const imgW = pageW - 20;
         const imgH = imgW / ratio;
-        const y = (pageH - imgH) / 2;
 
         if (!first) pdf.addPage();
         first = false;

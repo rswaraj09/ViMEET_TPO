@@ -1,20 +1,15 @@
 {
   "name": "tpo-portal",
   "version": "1.0.0",
-  "description": "Pillai University Training & Placement Office Portal",
+  "description": "Vishwaniketan iMEET Training & Placement Office Portal",
   "private": true,
   "type": "commonjs",
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "next lint",
-    "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev",
-    "db:deploy": "prisma migrate deploy",
-    "db:reset": "prisma migrate reset --force",
-    "db:studio": "prisma studio",
-    "db:seed": "ts-node prisma/seed.ts"
+    "lint": "eslint .",
+    "db:generate": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^6.17.1",

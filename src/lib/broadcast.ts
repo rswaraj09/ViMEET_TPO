@@ -1,10 +1,10 @@
 ﻿import { Resend } from "resend";
 import prisma from "./prisma";
 import logger from "@/lib/logger";
-import { BroadcastType } from "../../prisma/output/prismaclient";
+import { BroadcastType, Prisma } from "../../prisma/output/prismaclient";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "TPO Pillai University <noreply@example.com>";
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || "Vishwaniketan TPO <noreply@example.com>";
 
 const BATCH_SIZE = 100;
 const BATCH_DELAY_MS = 350; // ~3 batches/sec (under Resend's 5/sec limit)
@@ -18,11 +18,13 @@ interface EnqueueArgs {
   createdById?: number;
 }
 
-interface Failure {
+// Declared as a type alias (not an interface) so it keeps the implicit index
+// signature that makes `Failure[]` assignable to Prisma's JSON input type.
+type Failure = {
   userId: number;
   email: string;
   error: string;
-}
+};
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -110,8 +112,8 @@ const processBroadcast = async (jobId: string): Promise<void> => {
         chunkSuccess = true;
         logger.info({ jobId, chunkSize: emails.length, batchId: data }, "Chunk sent");
         break;
-      } catch (err: any) {
-        lastErr = err?.message || String(err);
+      } catch (err) {
+        lastErr = err instanceof Error ? err.message : String(err);
         logger.warn({ err, attempt, jobId }, "Batch send threw, retrying");
         await sleep(500 * attempt);
       }
@@ -130,7 +132,11 @@ const processBroadcast = async (jobId: string): Promise<void> => {
     // Live progress update
     await prisma.broadcastJob.update({
       where: { id: jobId },
-      data: { sentCount, failedCount, failures: failures as any },
+      data: {
+        sentCount,
+        failedCount,
+        failures: failures satisfies Prisma.InputJsonValue,
+      },
     });
 
     await sleep(BATCH_DELAY_MS);
@@ -144,7 +150,7 @@ const processBroadcast = async (jobId: string): Promise<void> => {
       status: finalStatus,
       sentCount,
       failedCount,
-      failures: failures as any,
+      failures: failures satisfies Prisma.InputJsonValue,
       completedAt: new Date(),
       lastError: failures[0]?.error,
     },

@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import Image from "next/image";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { NotificationBell } from "./NotificationBell";
@@ -16,9 +17,11 @@ export function Navbar({ buttonName, onClick }: NavbarProps) {
   return (
     <div className="pl-2 flex justify-between bg-white shadow-sm rounded-sm">
       <div>
-        <img
-          src="/logopillai.png"
-          alt="Pillai University logo"
+        <Image
+          src="/logo.png"
+          alt="Vishwaniketan iMEET logo"
+          width={80}
+          height={64}
           className="h-16 w-20 cursor-pointer"
           onClick={() => router.push("/")}
         />

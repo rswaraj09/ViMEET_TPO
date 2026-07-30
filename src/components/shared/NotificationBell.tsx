@@ -136,7 +136,7 @@ export function NotificationBell() {
               <div className="p-4 text-sm text-muted-foreground">Loading…</div>
             ) : items.length === 0 ? (
               <div className="p-6 text-sm text-center text-muted-foreground">
-                You're all caught up.
+                You&rsquo;re all caught up.
               </div>
             ) : (
               items.map((n) => (

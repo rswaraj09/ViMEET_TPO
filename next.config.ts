@@ -9,9 +9,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  experimental: {
-    serverComponentsExternalPackages: ["pino", "pino-pretty", "@prisma/client"],
-  },
+  serverExternalPackages: ["pino", "pino-pretty", "@prisma/client"],
 };
 
 export default nextConfig;

@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { toast } from "sonner";
 import { StickyNote, Trash2, Loader2, Send } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
@@ -159,9 +160,11 @@ export function StudentNotesPanel({ studentId, fetchNotes, addNote, deleteNote }
               <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div className="flex min-w-0 items-start gap-2.5">
                   {note.author.profilePic ? (
-                    <img
+                    <Image
                       src={note.author.profilePic}
                       alt=""
+                      width={28}
+                      height={28}
                       className="mt-0.5 h-7 w-7 flex-shrink-0 rounded-full object-cover"
                     />
                   ) : (

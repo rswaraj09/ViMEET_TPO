@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import Image from "next/image";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { AdminSidebar, type AdminTab } from "@/components/shared/AdminSidebar";
@@ -121,9 +122,11 @@ export function AdminDashboard() {
             {user && <NotificationBell />}
             <div className="hidden items-center gap-2 sm:flex">
               {user?.profilePic ? (
-                <img
+                <Image
                   src={user.profilePic}
                   alt=""
+                  width={32}
+                  height={32}
                   className="h-8 w-8 rounded-full object-cover"
                 />
               ) : (

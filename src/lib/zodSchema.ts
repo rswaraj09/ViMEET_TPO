@@ -1,9 +1,5 @@
 import { z } from "zod";
-import {
-  AcademicYear,
-  Role,
-  Department,
-} from "../../prisma/output/prismaclient";
+import { AcademicYear, Department } from "../../prisma/output/prismaclient";
 
 // ==================== AUTH ====================
 
